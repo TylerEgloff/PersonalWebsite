@@ -15,3 +15,4 @@ A portfolio website built with:
 - Background shooting star animation.
 - 8-bit alien animation.
 - Social media links
+- Full website is one html page, hiding all other sections when a navbar selection is made. This allows quick loads, and allows the animation loops to remain on a consistent timer.

@@ -237,3 +237,92 @@ function alienLoop() {
 setTimeout(() => {
     alienLoop();
 }, 25000)
+
+// Section visibility management and scroll-to-top button
+// ---------------------------------------------------------
+const sections = document.querySelectorAll('main > section');
+const toTopBtn = document.getElementById('toTopBtn');
+
+function showAllSections() {
+    sections.forEach(section => {
+        section.classList.remove('hidden');
+    });
+}
+
+function hideOtherSections(activeSectionId) {
+    sections.forEach(section => {
+        if (section.id !== activeSectionId && section.id !== 'home') {
+            section.classList.add('hidden');
+        }
+    });
+}
+
+function updateButtonState(isHomePage) {
+    if (isHomePage) {
+        toTopBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>';
+        toTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        toTopBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>';
+        toTopBtn.onclick = () => document.querySelector('a[href="#home"]').click();
+    }
+}
+
+function handleNavigation(targetId) {
+    const isHomePage = targetId === 'home' || targetId === '';
+    
+    if (isHomePage) {
+        showAllSections();
+    } else {
+        showAllSections();
+        hideOtherSections(targetId);
+    }
+    
+    updateButtonState(isHomePage);
+    updateButtonVisibility();
+    
+    // Close mobile menu if open
+    if (!mobileMenu.classList.contains('hidden')) {
+        toggleMenu();
+    }
+}
+
+function updateButtonVisibility() {
+    const isHomePage = !window.location.hash || window.location.hash === '#home';
+    
+    if (isHomePage) {
+        // On home page, only show if scrolled
+        const shouldShow = window.scrollY > 100;
+        toTopBtn.classList.toggle('hidden', !shouldShow);
+    } else {
+        // On other pages, always show (unless at top on load)
+        toTopBtn.classList.remove('hidden');
+    }
+}
+
+// Handle navigation clicks
+document.querySelectorAll('nav a, #mobile-menu a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href').substring(1);
+        handleNavigation(targetId);
+    });
+});
+
+// Scroll to top button visibility
+window.addEventListener('scroll', () => {
+    updateButtonVisibility();
+});
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const currentHash = window.location.hash.substring(1);
+    handleNavigation(currentHash || 'home');
+    
+    // Initial visibility check after a slight delay to allow rendering
+    setTimeout(updateButtonVisibility, 100);
+});
+
+// Handle browser back/forward navigation
+window.addEventListener('hashchange', function() {
+    const targetId = window.location.hash.substring(1);
+    handleNavigation(targetId || 'home');
+});

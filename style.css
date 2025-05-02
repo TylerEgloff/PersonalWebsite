@@ -17,5 +17,5 @@
 
 /* Add scroll margin to account for fixed header */
 section {
-    scroll-margin-top: 8rem; /* Adjust this to match your header height */
+    scroll-margin-top: 3rem;
   }

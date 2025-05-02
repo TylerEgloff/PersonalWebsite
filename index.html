@@ -128,7 +128,7 @@ TODO:
                 <div class="relative group w-full h-48 sm:h-56 md:h-64">
                     <img src="mars-render.JPG" alt="Project Preview" class="w-full h-full object-cover" />
                     <a href="https://tyleregloff.github.io/Mars-Render-THREE.js/" target="_blank"
-                        class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                        class="absolute inset-0 flex items-center justify-center bg-black/40">
                         <span
                             class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition">
                             Visit Project
@@ -171,7 +171,7 @@ TODO:
                 <div class="relative group w-full h-48 sm:h-56 md:h-64">
                     <img src="grooming-website.JPG" alt="Project Preview" class="w-full h-full object-cover" />
                     <a href="https://github.com/TylerEgloff/GroomingWebsite" target="_blank"
-                        class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                        class="absolute inset-0 flex items-center justify-center bg-black/40">
                         <span
                             class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition">
                             Visit Project
@@ -186,7 +186,7 @@ TODO:
                 <div class="relative group w-full h-48 sm:h-56 md:h-64">
                     <img src="database-engine.JPG" alt="Project Preview" class="w-full h-full object-cover" />
                     <a href="https://github.com/TylerEgloff/DatabaseEngine" target="_blank"
-                        class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                        class="absolute inset-0 flex items-center justify-center bg-black/40">
                         <span
                             class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition">
                             Visit Project
@@ -435,7 +435,16 @@ TODO:
 
     <!-- Shooting star container -->
     <div id="shooting-star-container" style="pointer-events:none; position:fixed; inset:0; z-index:10;"></div>
-    
+
+    <!-- Back to Top Arrow -->
+    <button id="toTopBtn"
+        class="hidden fixed bottom-8 right-8 z-50 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full p-3 shadow-lg transition-opacity duration-300"
+        aria-label="Back to top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+        </svg>
+    </button>
+
     <script src="script.js"></script>
 </body>
 

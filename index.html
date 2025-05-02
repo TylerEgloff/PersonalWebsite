@@ -1,0 +1,81 @@
+<!--
+TODO:
+ - Re-evaluate background. Consider adding: color gradient, comet cascading across, revolving planet animation.
+ - Add next content sections: What I Do, Projects, Skills, Experience, Contact
+ - Add social links & their icons
+ - Consider adding a hover effect to each card
+-->
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tyler Egloff | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen" style="background-image: url('data:image/svg+xml;utf8,<svg width=\'400\' height=\'400\' viewBox=\'0 0 400 400\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><circle cx=\'50\' cy=\'80\' r=\'1.5\' fill=\'white\' opacity=\'0.7\'/><circle cx=\'120\' cy=\'200\' r=\'2.5\' fill=\'white\' opacity=\'0.9\'/><circle cx=\'300\' cy=\'100\' r=\'1\' fill=\'white\' opacity=\'0.5\'/><circle cx=\'350\' cy=\'350\' r=\'3\' fill=\'white\' opacity=\'0.8\'/><circle cx=\'200\' cy=\'300\' r=\'2\' fill=\'white\' opacity=\'0.6\'/><circle cx=\'370\' cy=\'40\' r=\'1.2\' fill=\'white\' opacity=\'0.7\'/><circle cx=\'60\' cy=\'350\' r=\'2\' fill=\'white\' opacity=\'0.8\'/><circle cx=\'250\' cy=\'250\' r=\'1.7\' fill=\'white\' opacity=\'0.6\'/><circle cx=\'180\' cy=\'60\' r=\'1.3\' fill=\'white\' opacity=\'0.7\'/></svg>'); background-size: 400px 400px;">
+    <header class="fixed w-full top-0 left-0 z-50 backdrop-blur-sm bg-gray-900/80 border-b border-gray-800">
+        <div class="max-w-6xl mx-auto px-8">
+            <div class="flex justify-center items-center h-16 relative">
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-indigo-400 transition">HOME</a>
+                    <a href="#what-i-do" class="hover:text-indigo-400 transition">WHAT I DO</a>
+                    <a href="#projects" class="hover:text-indigo-400 transition">PROJECTS</a>
+                    <a href="#skills" class="hover:text-indigo-400 transition">SKILLS</a>
+                    <a href="#experience" class="hover:text-indigo-400 transition">EXPERIENCE</a>
+                    <a href="#contact" class="hover:text-indigo-400 transition">CONTACT</a>
+                </nav>
+                <!-- Mobile Nav Toggle -->
+                <button id="menu-btn" class="md:hidden absolute right-0 flex items-center justify-center w-10 h-10 rounded hover:bg-gray-800 transition z-50" aria-label="Open menu">
+                    <svg id="menu-icon" class="w-7 h-7 block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg id="close-icon" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Nav -->
+        <div id="mobile-menu" class="fixed top-0 left-0 w-full bg-gray-900/95 z-40 flex flex-col items-center pt-24 pb-8 space-y-6 text-lg font-medium shadow-lg slide-down transition-all duration-300 ease-in-out hidden">
+            <a href="#home" class="hover:text-indigo-400 transition" onclick="toggleMenu()">HOME</a>
+            <a href="#what-i-do" class="hover:text-indigo-400 transition" onclick="toggleMenu()">WHAT I DO</a>
+            <a href="#projects" class="hover:text-indigo-400 transition" onclick="toggleMenu()">PROJECTS</a>
+            <a href="#skills" class="hover:text-indigo-400 transition" onclick="toggleMenu()">SKILLS</a>
+            <a href="#experience" class="hover:text-indigo-400 transition" onclick="toggleMenu()">EXPERIENCE</a>
+            <a href="#contact" class="hover:text-indigo-400 transition" onclick="toggleMenu()">CONTACT</a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 pt-32 pb-20">
+        <!-- Profile Card -->
+        <section class="flex flex-col items-center mb-16">
+            <div class="bg-gray-800 rounded-2xl shadow-lg p-8 w-full max-w-xl text-center">
+                <h1 class="text-3xl font-bold mb-2">Good evening, I'm Tyler!</h1>
+                <p class="mb-4 text-lg text-gray-300">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque mollis. 
+                    Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                </p>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <a href="#" class="hover:text-indigo-400">GitHub</a>
+                    <a href="#" class="hover:text-indigo-400">LinkedIn</a>
+                    <a href="#" class="hover:text-indigo-400">Email</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>

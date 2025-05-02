@@ -26,8 +26,8 @@ function createShootingStar() {
     
     // Parameters
     const startY = Math.random() * window.innerHeight;
-    const length = Math.random() * 120 + 80;
-    const duration = Math.random() * 1 + 1;
+    const length = Math.random() * 120 + 30;
+    const duration = Math.random() * 1 + .25;
     const angle = Math.random() * 30 - 15;
     const angleRad = angle * Math.PI / 180;
     const travelDistance = window.innerWidth + length;
@@ -113,3 +113,41 @@ function shootingStarLoop() {
 }
 
 shootingStarLoop();
+
+// Profile card text
+const textContent = ["Developer", "Student", "Researcher"];
+let contentIndex = 0;
+let charIndex = 0;
+let typing = true;
+
+const text = document.getElementById('profile-text');
+const cursor = document.getElementById('cursor');
+
+// Blinking cursor effect
+setInterval(() => {
+    cursor.style.opacity = cursor.style.opacity === "0" ? "1" : "0";
+}, 500);
+
+function textLoop() {
+    const current = textContent[contentIndex];
+    if (typing) {
+        if (charIndex < current.length) {
+            text.textContent += current[charIndex++];
+            setTimeout(textLoop, 80);
+        } else {
+            typing = false;
+            setTimeout(textLoop, 3000); // Pause before erasing
+        }
+    } else {
+        if (charIndex > 0) {
+            text.textContent = current.substring(0, --charIndex);
+            setTimeout(textLoop, 40);
+        } else {
+            typing = true;
+            contentIndex = (contentIndex + 1) % textContent.length;
+            setTimeout(textLoop, 400); // Pause before tying next
+        }
+    }
+}
+
+textLoop();

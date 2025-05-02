@@ -23,7 +23,7 @@ window.addEventListener('resize', () => {
 // -- Shooting star 
 function createShootingStar() {
     const container = document.getElementById('shooting-star-container');
-    
+
     // Parameters
     const startY = Math.random() * window.innerHeight;
     const length = Math.random() * 120 + 30;
@@ -51,14 +51,14 @@ function createShootingStar() {
     star.style.filter = 'drop-shadow(0 0 4px rgba(255,255,255,0.5))';
 
     // Create twinkle effect
-    const twinkleSize = 12; 
+    const twinkleSize = 12;
     const twinkle = document.createElement('div');
     twinkle.style.position = 'absolute';
     twinkle.style.left = `${length}px`;
     twinkle.style.top = '1';
     twinkle.style.width = `${twinkleSize}px`;
     twinkle.style.height = `${twinkleSize}px`;
-    twinkle.style.transform = `translateX(-${twinkleSize/2}px) translateY(-${twinkleSize/2}px)`;
+    twinkle.style.transform = `translateX(-${twinkleSize / 2}px) translateY(-${twinkleSize / 2}px)`;
     twinkle.innerHTML = `
         <div style="
             position:absolute; width:100%; height:3px; background:rgba(255,255,255,0.2);
@@ -90,10 +90,10 @@ function createShootingStar() {
 
     // Twinkle pulse animation
     const twinkleAnimation = twinkle.animate([
-        { transform: `translateX(-${twinkleSize/2}px) translateY(-${twinkleSize/2}px) scale(1)`, opacity: 0 },
-        { transform: `translateX(-${twinkleSize/2}px) translateY(-${twinkleSize/2}px) scale(1.5)`, opacity: 1, offset: 0.3 },
-        { transform: `translateX(-${twinkleSize/2}px) translateY(-${twinkleSize/2}px) scale(1)`, opacity: 0.7, offset: 0.6 },
-        { transform: `translateX(-${twinkleSize/2}px) translateY(-${twinkleSize/2}px) scale(1.3)`, opacity: 0.3 }
+        { transform: `translateX(-${twinkleSize / 2}px) translateY(-${twinkleSize / 2}px) scale(1)`, opacity: 0 },
+        { transform: `translateX(-${twinkleSize / 2}px) translateY(-${twinkleSize / 2}px) scale(1.5)`, opacity: 1, offset: 0.3 },
+        { transform: `translateX(-${twinkleSize / 2}px) translateY(-${twinkleSize / 2}px) scale(1)`, opacity: 0.7, offset: 0.6 },
+        { transform: `translateX(-${twinkleSize / 2}px) translateY(-${twinkleSize / 2}px) scale(1.3)`, opacity: 0.3 }
     ], {
         duration: duration * 750,
         easing: 'ease-in-out',
@@ -154,8 +154,8 @@ textLoop();
 
 // -- Alien animation
 const svgs = [
-  `<svg viewBox="0 0 512 512" width="24" height="24" class="w-6 h-6"><g><path fill="#fff" d="m468.34,111.66l1,69.68l-42.65,0l0,-42.68l-42.69,0l0,-21.32l42.69,0l0,-64l-64,0l0,42.65l-42.69,0l0,42.67l-128,0l0,-42.67l-42.66,0l0,-42.65l-64,0l0,64l42.66,0l0,21.32l-42.66,0l0,42.68l-42.65,0l1,-75.68l-44.69,1l-0.25,222.08l48.75,-0.25l-0.25,-27.25l15.75,0.75l1,28.67l21.34,0l2,36.33l23.66,2l0,40.67l-61.31,-3l0,52l77.91,2.75l-0.09,-30.25l30.83,0.5l-1,-60.32l201.35,3l3,63.32l32.65,3l2.25,33.25l82.25,4.25l-2.5,-51.5l-65.34,-4l-3,-45.67l20.69,0l-2,-46.33l21.31,0l-1,-26.67l18.25,0.75l1.25,28.75l45.5,1.5l0,-222.33l-43.66,-1zm-276.34,133.68l-64,0l0,-64l64,0l0,64zm192,0l-64,0l0,-64l64,0l0,64z"/></g></svg>`,
-  `<svg viewBox="0 0 512 512" width="24" height="24" class="w-6 h-6"><g><path fill="#fff" d="m469.34,266.66l0,-85.32l-42.65,0l0,-42.68l-42.69,0l0,-21.32l42.69,0l0,-64l-64,0l0,42.65l-42.69,0l0,42.67l-128,0l0,-42.67l-42.66,0l0,-42.65l-64,0l0,64l42.66,0l0,21.32l-42.66,0l0,42.68l-42.65,0l0,85.32l-42.69,0l0,149.33l64,0l0,-85.33l21.34,0l0,85.33l42.66,0l0,42.67l106.69,0l0,-64l-85.35,0l0,-21.32l213.35,0l0,21.32l-85.35,0l0,64l106.66,0l0,-42.67l42.69,0l0,-85.33l21.31,0l0,85.33l64,0l0,-149.33l-42.66,0zm-277.34,-21.32l-64,0l0,-64l64,0l0,64zm192,0l-64,0l0,-64l64,0l0,64z"/></g></svg>`
+    `<svg viewBox="0 0 512 512" width="24" height="24" class="w-6 h-6"><g><path fill="#fff" d="m468.34,111.66l1,69.68l-42.65,0l0,-42.68l-42.69,0l0,-21.32l42.69,0l0,-64l-64,0l0,42.65l-42.69,0l0,42.67l-128,0l0,-42.67l-42.66,0l0,-42.65l-64,0l0,64l42.66,0l0,21.32l-42.66,0l0,42.68l-42.65,0l1,-75.68l-44.69,1l-0.25,222.08l48.75,-0.25l-0.25,-27.25l15.75,0.75l1,28.67l21.34,0l2,36.33l23.66,2l0,40.67l-61.31,-3l0,52l77.91,2.75l-0.09,-30.25l30.83,0.5l-1,-60.32l201.35,3l3,63.32l32.65,3l2.25,33.25l82.25,4.25l-2.5,-51.5l-65.34,-4l-3,-45.67l20.69,0l-2,-46.33l21.31,0l-1,-26.67l18.25,0.75l1.25,28.75l45.5,1.5l0,-222.33l-43.66,-1zm-276.34,133.68l-64,0l0,-64l64,0l0,64zm192,0l-64,0l0,-64l64,0l0,64z"/></g></svg>`,
+    `<svg viewBox="0 0 512 512" width="24" height="24" class="w-6 h-6"><g><path fill="#fff" d="m469.34,266.66l0,-85.32l-42.65,0l0,-42.68l-42.69,0l0,-21.32l42.69,0l0,-64l-64,0l0,42.65l-42.69,0l0,42.67l-128,0l0,-42.67l-42.66,0l0,-42.65l-64,0l0,64l42.66,0l0,21.32l-42.66,0l0,42.68l-42.65,0l0,85.32l-42.69,0l0,149.33l64,0l0,-85.33l21.34,0l0,85.33l42.66,0l0,42.67l106.69,0l0,-64l-85.35,0l0,-21.32l213.35,0l0,21.32l-85.35,0l0,64l106.66,0l0,-42.67l42.69,0l0,-85.33l21.31,0l0,85.33l64,0l0,-149.33l-42.66,0zm-277.34,-21.32l-64,0l0,-64l64,0l0,64zm192,0l-64,0l0,-64l64,0l0,64z"/></g></svg>`
 ];
 
 let alienExists = null;
@@ -183,7 +183,7 @@ function moveAlien() {
 
     function animate(currentTime) {
         const elapsed = currentTime - startTime;
-        
+
         if (elapsed - lastFrameTime > 500) {
             frame = (frame + 1) % 2;
             alienExists.innerHTML = svgs[frame];

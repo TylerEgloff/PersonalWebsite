@@ -64,9 +64,9 @@ TODO:
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 pt-32 pb-20">
+    <main class="max-w-4xl mx-auto px-4 pt-32 pb-20" id="home">
         <!-- Profile Card -->
-        <section class="flex flex-col items-center mb-16">
+        <section class="flex flex-col items-center mb-6">
             <div class="bg-gray-800 rounded-2xl shadow-lg p-8 w-full max-w-xl text-center md:text-left">
                 <div class="flex items-center space-x-6">
                     <!-- Profile Image -->
@@ -117,10 +117,325 @@ TODO:
                 </div>
             </div>
         </section>
+
+        <section id="projects" class="py-8 px-4 sm:px-6">
+            <h2 class="text-4xl font-bold text-center mb-4">Projects</h2>
+            <hr class="border-gray-700 mb-8 max-w-4xl mx-auto">
+
+            <!-- Mars Render -->
+            <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row mb-6">
+                <!-- Hover overlay -->
+                <div class="relative group w-full h-48 sm:h-56 md:h-64">
+                    <img src="mars-render.JPG" alt="Project Preview" class="w-full h-full object-cover" />
+                    <a href="https://tyleregloff.github.io/Mars-Render-THREE.js/" target="_blank"
+                        class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span
+                            class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition">
+                            Visit Project
+                        </span>
+                    </a>
+                </div>
+                <!-- Text Area -->
+                <div class="p-6 md:p-8">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-3">Browser-Based Mars Rendering</h3>
+                    <p class="text-gray-300 mb-4 text-base md:text-lg">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque
+                        mollis.
+                        Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-yellow-500 text-white px-3 py-1 rounded text-xs font-semibold">JavaScript</span>
+                        <span class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-semibold">Three.js</span>
+                        <span class="bg-red-700 text-white px-3 py-1 rounded text-xs font-semibold">HTML5</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--Grooming Website-->
+            <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col-reverse lg:flex-row mb-6">
+                <!-- Text Area -->
+                <div class="p-6 md:p-8">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-3">Dog Grooming Website</h3>
+                    <p class="text-gray-300 mb-4 text-base md:text-lg">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque
+                        mollis.
+                        Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-sky-500 text-white px-3 py-1 rounded text-xs font-semibold">Tailwind</span>
+                        <span class="bg-lime-700 text-white px-3 py-1 rounded text-xs font-semibold">Spring</span>
+                        <span class="bg-sky-700 text-white px-3 py-1 rounded text-xs font-semibold">MySQL</span>
+                    </div>
+                </div>
+                <!-- Hover overlay -->
+                <div class="relative group w-full h-48 sm:h-56 md:h-64">
+                    <img src="grooming-website.JPG" alt="Project Preview" class="w-full h-full object-cover" />
+                    <a href="https://github.com/TylerEgloff/GroomingWebsite" target="_blank"
+                        class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span
+                            class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition">
+                            Visit Project
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!--DB Engine-->
+            <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row mb-6">
+                <!-- Hover overlay -->
+                <div class="relative group w-full h-48 sm:h-56 md:h-64">
+                    <img src="database-engine.JPG" alt="Project Preview" class="w-full h-full object-cover" />
+                    <a href="https://github.com/TylerEgloff/DatabaseEngine" target="_blank"
+                        class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span
+                            class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-indigo-600 transition">
+                            Visit Project
+                        </span>
+                    </a>
+                </div>
+                <!-- Text Area -->
+                <div class="p-6 md:p-8">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-3">Demo Database Engine</h3>
+                    <p class="text-gray-300 mb-4 text-base md:text-lg">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque
+                        mollis.
+                        Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-amber-600 text-white px-3 py-1 rounded text-xs font-semibold">Java</span>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-8 px-4 sm:px-6">
+            <h2 class="text-4xl font-bold text-center mb-4">Skills</h2>
+            <hr class="border-gray-700 mb-8 max-w-4xl mx-auto">
+            <div class="max-w-3xl mx-auto">
+                <!-- Frontend Development -->
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                    <h3 class="text-2xl font-bold mb-2">Full-Stack Development</h3>
+                    <hr class="border-gray-700 mb-4">
+                    <p class="text-gray-300 mb-4">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque
+                        mollis.
+                        Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">HTML</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">CSS</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">TailwindCSS</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">JavaScript</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Node.js</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Express.js</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Java</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Spring</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">MySQL</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">PostgreSQL</span>
+                    </div>
+                </div>
+                <!-- Data Science -->
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                    <h3 class="text-2xl font-bold mb-2">Data Science</h3>
+                    <hr class="border-gray-700 mb-4">
+                    <p class="text-gray-300 mb-4">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque
+                        mollis.
+                        Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Python</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Pandas</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Matplotlib</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">NumPy</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">TensorFlow</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">PyTorch</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Keras</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">OpenCV</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">MediaPipe</span>
+                    </div>
+                </div>
+                <!-- Research Work -->
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                    <h3 class="text-2xl font-bold mb-2">Research & Documentation</h3>
+                    <hr class="border-gray-700 mb-4">
+                    <p class="text-gray-300 mb-4">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque
+                        mollis.
+                        Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Git</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Markdown</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">LaTeX</span>
+                        <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">draw.io</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="py-8 px-4 sm:px-6">
+            <h2 class="text-4xl font-bold text-center mb-4">Experience</h2>
+            <hr class="border-gray-700 mb-8 max-w-4xl mx-auto">
+            <div class="max-w-3xl mx-auto">
+                <!-- Comp. Sci. Degree -->
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-1">Computer Science, B.S.</h3>
+                    <div class="text-gray-400 text-sm mb-1">@ Northern Kentucky University</div>
+                    <div class="text-gray-400 text-sm mb-1">Aug 2022 - May 2026</div>
+                    <hr class="border-gray-700 mb-4">
+                    <p class="text-gray-300 mb-4">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque
+                        mollis.
+                        Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                    </p>
+                    <div>
+                        <span class="font-semibold text-white">Relevant skills:</span>
+                        <ul class="list-disc list-inside text-gray-300 mt-1">
+                            <li>Python</li>
+                            <li>Java</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Research Fellow -->
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-1">Undergraduate Research Fellow</h3>
+                    <div class="text-gray-400 text-sm mb-1">@ Northern Kentucky University</div>
+                    <div class="text-gray-400 text-sm mb-1">Sep 2023 - Present</div>
+                    <hr class="border-gray-700 mb-4">
+                    <p class="text-gray-300 mb-4">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque
+                        mollis.
+                        Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                    </p>
+                    <div>
+                        <span class="font-semibold text-white">Relevant skills:</span>
+                        <ul class="list-disc list-inside text-gray-300 mt-1">
+                            <li>Full-Stack Development</li>
+                            <li>Data Analysis</li>
+                            <li>OpenCV & MediaPipe</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Tutoring -->
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-1">Academic Tutor</h3>
+                    <div class="text-gray-400 text-sm mb-1">@ Northern Kentucky University</div>
+                    <div class="text-gray-400 text-sm mb-1">Mar 2024 - Jan 2025</div>
+                    <hr class="border-gray-700 mb-4">
+                    <p class="text-gray-300 mb-4">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida nisi sed urna scelerisque
+                        mollis.
+                        Donec pellentesque non est sit amet aliquam. Curabitur facilisis sodales facilisis.
+                    </p>
+                    <div>
+                        <span class="font-semibold text-white">Relevant skills:</span>
+                        <ul class="list-disc list-inside text-gray-300 mt-1">
+                            <li>Python</li>
+                            <li>Java</li>
+                            <li>Programming Mathematics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="py-8 px-4 sm:px-6">
+            <h2 class="text-4xl font-bold text-center mb-4">Publications</h2>
+            <hr class="border-gray-700 mb-8 max-w-4xl mx-auto">
+            <div class="max-w-3xl mx-auto">
+                <!-- Blink Detection -->
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-1">
+                        <a href="https://ieeexplore.ieee.org/abstract/document/10569727" target="_blank" class="hover:text-indigo-400 underline transition">
+                            A Blink Detection Algorithm for Eye-Tracking Applications Based on Facial Geometry
+                        </a>
+                    </h3>
+                    <div class="text-gray-400 text-sm mb-1">Egloff, T., Hall, E., Caporusso, N., Thaman, B. (2024)</div>
+                    <hr class="border-gray-700 mb-4">
+                    <p class="text-gray-300 mb-4">
+                        This paper presents three real-time blink detection algorithms for interpreting MediaPipe facial landmark data. Involved a lot of data analysis scripting, extracting useful data out of raw numbers.
+                    </p>
+                    <div>
+                        <span class="font-semibold text-white">Journal:</span>
+                        <span class="text-gray-300">MIPRO ICT and Electronics Convention (MIPRO)</span>
+                    </div>
+                </div>
+                <!-- Medeival Manuscripts -->
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                    <h3 class="text-xl font-bold mb-1">
+                        <a href="https://ieeexplore.ieee.org/abstract/document/10927836" target="_blank" class="hover:text-indigo-400 underline transition">
+                            Using Eye-Tracking and Data Visualization to Enhance the Study of Medieval Manuscripts
+                        </a>
+                    </h3>
+                    <div class="text-gray-400 text-sm mb-1">Hall, E., Egloff, T., Doan, H., Caporusso, N., O'Callaghan, T., Thaman, B. (2024)</div>
+                    <hr class="border-gray-700 mb-4">
+                    <p class="text-gray-300 mb-4">
+                        This paper presents findings of tracking eye gaze when subjects viewed medeival manuscripts. Involved data analysis and visualization, generating heatmaps and statistical analyses.
+                    </p>
+                    <div>
+                        <span class="font-semibold text-white">Journal:</span>
+                        <span class="text-gray-300">International Conference on Computer and Applications (ICCA)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-8 px-4 sm:px-6">
+            <h2 class="text-4xl font-bold text-center mb-4">
+                <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Get in Touch with me!</span>
+            </h2>
+            <div class="flex flex-col items-center mb-8">
+                <a href="mailto:tyler.egloff@gmail.com"
+                   class="flex items-center px-6 py-3 border-2 border-indigo-400 rounded-lg text-indigo-200 hover:bg-indigo-500 hover:text-white transition font-medium text-lg mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M16 12l-4-4-4 4m8 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v4" />
+                    </svg>
+                    Send me an email
+                </a>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <a href="https://www.linkedin.com/in/tyler-egloff/" class="hover:text-indigo-400">
+                        <!-- Source: https://uxwing.com/linkedin-app-white-icon/ -->
+                        <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision"
+                            text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd"
+                            clip-rule="evenodd" viewBox="0 0 512 512" width="24" height="24" class="w-6 h-6">
+                            <path fill="#fff"
+                                d="M474.919 0H38.592C17.72 0 0 16.504 0 36.841V475.14C0 495.496 11.629 512 32.492 512h436.327C489.718 512 512 495.496 512 475.14V36.841C512 16.504 495.809 0 474.919 0zM195.043 195.043h68.928v35.136h.755c10.505-18.945 41.541-38.177 79.921-38.177 73.655 0 94.214 39.108 94.214 111.538v135.321h-73.148V316.883c0-32.427-12.947-60.883-43.227-60.883-36.768 0-54.295 24.889-54.295 65.758v117.103h-73.148V195.043zM73.139 438.861h73.148V195.043H73.139v243.818zm82.289-329.148c0 25.258-20.457 45.715-45.715 45.715-25.258 0-45.715-20.457-45.715-45.715 0-25.258 20.457-45.715 45.715-45.715 25.258 0 45.715 20.457 45.715 45.715z" />
+                        </svg>
+                    </a>
+                    <a href="mailto:tyler.egloff@gmail.com" class="hover:text-indigo-400">
+                        <!-- Source: https://uxwing.com/email-envelope-white-icon/ -->
+                        <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision"
+                            text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd"
+                            clip-rule="evenodd" viewBox="0 0 512 327.53" width="24" height="24" class="w-6 h-6">
+                            <path fill="#fff"
+                                d="M254.41 274.97l100.93-100.92 153.49 153.48H0l153.49-153.48 100.92 100.92zM5.84 0l248.57 248.56L502.98 0H5.84zM0 290.3l131.77-131.78L0 26.75V290.3zm512 12.61L367.61 158.52 512 14.14v288.77z" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com/TylerEgloff" class="hover:text-indigo-400 flex items-center space-x-1">
+                        <!-- Source: https://github.com/logos -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 98" width="24" height="24"
+                            class="w-6 h-6">
+                            <path fill="#fff" fill-rule="evenodd"
+                                d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <p class="text-center text-gray-400 mt-8 text-sm">
+                Copyright © 2025 Tyler Egloff - All Rights Reserved.
+            </p>
+        </section>
+
     </main>
 
     <!-- Shooting star container -->
     <div id="shooting-star-container" style="pointer-events:none; position:fixed; inset:0; z-index:10;"></div>
+    
     <script src="script.js"></script>
 </body>
 

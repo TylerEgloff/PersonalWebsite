@@ -14,3 +14,8 @@
         opacity: 1;
     }
 }
+
+/* Add scroll margin to account for fixed header */
+section {
+    scroll-margin-top: 8rem; /* Adjust this to match your header height */
+  }

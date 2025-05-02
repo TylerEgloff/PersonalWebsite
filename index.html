@@ -1,9 +1,3 @@
-<!--
-TODO:
- - Re-evaluate background. Consider adding: color gradient, comet cascading across, revolving planet animation. Consider adding a glow to stars.
- - Consider adding a hover effect to each card
- -->
-
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
@@ -12,14 +6,47 @@ TODO:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tyler Egloff | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {}
+    <style>
+        /* Animation for mobile menu dropdown */
+        .slide-down {
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-1rem);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
             }
         }
-    </script>
-    <link href="style.css" rel="stylesheet">
+
+        /* Scroll margin to account for header size */
+        section {
+            scroll-margin-top: 3rem;
+        }
+
+        /* Purple card border glow on hover */
+        .card-glow {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            transition: transform 0.5s cubic-bezier(1, 0, 0, 1), box-shadow 0.5s;
+        }
+
+        .card-glow:hover {
+            transform: scale(0.995);
+            box-shadow: 0 0 6px 2px rgba(41, 5, 173, 0.2), 0 0 0 2px rgba(41, 5, 173, 0.05);
+        }
+
+        .card-glow:hover::before {
+            opacity: 1;
+            transform: rotate(-45deg) translateY(120%);
+        }
+    </style>
 </head>
 
 <body class="bg-gray-900 text-gray-100 min-h-screen"
@@ -64,10 +91,10 @@ TODO:
     <main class="max-w-4xl mx-auto px-4 pt-32 pb-20" id="home">
         <!-- Profile Card -->
         <section class="flex flex-col items-center mb-6">
-            <div class="bg-gray-800 rounded-2xl shadow-lg p-8 w-full max-w-xl text-center md:text-left">
+            <div class="bg-gray-800 rounded-2xl shadow-lg p-8 w-full max-w-xl text-center md:text-left card-glow">
                 <div class="flex items-center space-x-6">
                     <!-- Profile Image -->
-                    <img src="portrait.JPEG" alt="Tyler Egloff"
+                    <img src="img/portrait.JPEG" alt="Tyler Egloff"
                         class="w-24 h-24 rounded-full object-cover border-4 border-gray-700 shadow-md" />
                     <!-- Name and Title -->
                     <div class="flex flex-col items-center md:items-start">
@@ -79,11 +106,16 @@ TODO:
                     </div>
                 </div>
                 <p class="mt-6 mb-4 text-xl text-gray-300">
-                    I was born and raised in Kentucky, USA, where I decided to persue a Bachelor's in Computer Science. Now entering my senior year of my program, I'm excited to be at the start of my career. 
+                    I was born and raised in Kentucky, USA, where I decided to persue a Bachelor's in Computer Science.
+                    Now entering my senior year of my program, I'm excited to be at the start of my career.
                     <br><br>
-                    I'm passionate about developing projects that have a real-world contribution, no matter how big or small. I have tried to chase this passion through research work, tutoring, and other personal projects, all playing their own part in growing my knowledge.
+                    I'm passionate about developing projects that have a real-world contribution, no matter how big or
+                    small. I have tried to chase this passion through research work, tutoring, and other personal
+                    projects, all playing their own part in growing my knowledge.
                     <br><br>
-                    <strong>Human-computer Interaction</strong>, <strong>software testing</strong>, <strong>UI/UX design</strong>, and any other fields that allow me to directly improve the user experience are among my most motivated interests. 
+                    <strong>Human-computer Interaction</strong>, <strong>software testing</strong>, <strong>UI/UX
+                        design</strong>, and any other fields that allow me to directly improve the user experience are
+                    among my most motivated interests.
                 </p>
                 <div class="flex justify-center space-x-4 mt-4">
                     <a href="https://www.linkedin.com/in/tyler-egloff/" class="hover:text-indigo-400">
@@ -122,10 +154,10 @@ TODO:
             <hr class="border-gray-700 mb-8 max-w-4xl mx-auto">
 
             <!-- Mars Render -->
-            <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row mb-6">
+            <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row mb-6 card-glow">
                 <!-- Hover overlay -->
-                <div class="relative group w-full h-64 sm:h-72 md:h-80 lg:h-80">
-                    <img src="mars-render.JPG" alt="Project Preview" class="w-full h-full object-cover" />
+                <div class="relative group w-full h-72 sm:h-72 md:h-80 lg:h-80">
+                    <img src="img/mars-render.JPG" alt="Project Preview" class="w-full h-full object-cover" />
                     <a href="https://tyleregloff.github.io/Mars-Render-THREE.js/" target="_blank"
                         class="absolute inset-0 flex items-center justify-center bg-black/40">
                         <span
@@ -135,38 +167,42 @@ TODO:
                     </a>
                 </div>
                 <!-- Text Area -->
-                <div class="p-6 md:p-8">
-                    <h3 class="text-2xl md:text-3xl font-bold mb-3">Browser-Based Mars Rendering</h3>
+                <div class="p-6 md:p-6">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-4">Browser-Based Mars Rendering</h3>
                     <p class="text-gray-300 mb-4 text-base md:text-lg">
-                        3-D rendering of Mars, using real NASA topograhical data. Utilizes the THREE.js library to implement an efficient rendering. 
+                        3-D rendering of Mars, using real NASA topograhical data. Utilizes the THREE.js library to
+                        implement an efficient rendering.
                         <br>
-                        A highlight of this project was implementing a custom geometry algorithm that utilized the pixel intensities of a Mars heightmap image to create the custom sphere mesh.
+                        A highlight of this project was implementing a custom geometry algorithm that utilized the pixel
+                        intensities of a Mars heightmap image to create the custom sphere mesh.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="bg-yellow-500 text-white px-3 py-1 rounded text-xs font-semibold">JavaScript</span>
-                        <span class="bg-blue-600 text-white px-3 py-1 rounded text-xs font-semibold">Three.js</span>
-                        <span class="bg-red-700 text-white px-3 py-1 rounded text-xs font-semibold">HTML5</span>
+                        <span class="bg-yellow-500 text-white px-3 py-1 rounded text-s font-semibold">JavaScript</span>
+                        <span class="bg-blue-600 text-white px-3 py-1 rounded text-s font-semibold">Three.js</span>
+                        <span class="bg-red-700 text-white px-3 py-1 rounded text-s font-semibold">HTML5</span>
                     </div>
                 </div>
             </div>
 
             <!--Grooming Website-->
-            <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col-reverse lg:flex-row mb-6">
+            <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col-reverse lg:flex-row mb-6 card-glow">
                 <!-- Text Area -->
-                <div class="p-6 md:p-8">
+                <div class="p-6 md:p-6">
                     <h3 class="text-2xl md:text-3xl font-bold mb-3">Dog Grooming Website</h3>
                     <p class="text-gray-300 mb-4 text-base md:text-lg">
-                        May I present Barky Barbers, a dog grooming appointment registry service. This is a Spring Boot app that utilizes MySQL to maintain a database of services offered, customers, and appointments. Made with the intention of learning automated testing with Selenium. 
+                        May I present Barky Barbers, a dog grooming appointment registry service. This is a Spring Boot
+                        app that utilizes MySQL to maintain a database of services offered, customers, and appointments.
+                        Made with the intention of learning automated testing with Selenium.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="bg-sky-500 text-white px-3 py-1 rounded text-xs font-semibold">Tailwind</span>
-                        <span class="bg-lime-700 text-white px-3 py-1 rounded text-xs font-semibold">Spring</span>
-                        <span class="bg-sky-700 text-white px-3 py-1 rounded text-xs font-semibold">MySQL</span>
+                        <span class="bg-sky-500 text-white px-3 py-1 rounded text-s font-semibold">Tailwind</span>
+                        <span class="bg-lime-700 text-white px-3 py-1 rounded text-s font-semibold">Spring</span>
+                        <span class="bg-sky-700 text-white px-3 py-1 rounded text-s font-semibold">MySQL</span>
                     </div>
                 </div>
                 <!-- Hover overlay -->
                 <div class="relative group w-full h-64 sm:h-72 md:h-80 lg:h-80">
-                    <img src="grooming-website.JPG" alt="Project Preview" class="w-full h-full object-cover" />
+                    <img src="img/grooming-website.JPG" alt="Project Preview" class="w-full h-full object-cover" />
                     <a href="https://github.com/TylerEgloff/GroomingWebsite" target="_blank"
                         class="absolute inset-0 flex items-center justify-center bg-black/40">
                         <span
@@ -178,10 +214,10 @@ TODO:
             </div>
 
             <!--DB Engine-->
-            <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row mb-6">
+            <div class="bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col lg:flex-row mb-6 card-glow">
                 <!-- Hover overlay -->
                 <div class="relative group w-full h-64 sm:h-72 md:h-80 lg:h-80">
-                    <img src="database-engine.JPG" alt="Project Preview" class="w-full h-full object-cover" />
+                    <img src="img/database-engine.JPG" alt="Project Preview" class="w-full h-full object-cover" />
                     <a href="https://github.com/TylerEgloff/DatabaseEngine" target="_blank"
                         class="absolute inset-0 flex items-center justify-center bg-black/40">
                         <span
@@ -191,13 +227,16 @@ TODO:
                     </a>
                 </div>
                 <!-- Text Area -->
-                <div class="p-6 md:p-8">
+                <div class="p-6 md:p-6">
                     <h3 class="text-2xl md:text-3xl font-bold mb-3">Demo Database Engine</h3>
                     <p class="text-gray-300 mb-4 text-base md:text-lg">
-                        This demo database engine was a side project I made after a motivating discussion with my databases professor. It seeks to provide basic SQL table creation and querying. Although most features of a real DB engine are unimplemented, it was very insightful in growing a deeper understanding of SQL. 
+                        This demo database engine was a side project I made after a motivating discussion with my
+                        databases professor. It seeks to provide basic SQL table creation and querying. Although most
+                        features of a real DB engine are unimplemented, it was very insightful in growing a deeper
+                        understanding of SQL.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="bg-amber-600 text-white px-3 py-1 rounded text-xs font-semibold">Java</span>
+                        <span class="bg-amber-600 text-white px-3 py-1 rounded text-s font-semibold">Java</span>
 
                     </div>
                 </div>
@@ -210,11 +249,13 @@ TODO:
             <hr class="border-gray-700 mb-8 max-w-4xl mx-auto">
             <div class="max-w-3xl mx-auto">
                 <!-- Frontend Development -->
-                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 card-glow">
                     <h3 class="text-2xl font-bold mb-2">Full-Stack Development</h3>
                     <hr class="border-gray-700 mb-4">
                     <p class="text-gray-300 mb-4">
-                        Personal projects and research work developing web applications with real-time eye-tracking has provided a good grasp of full-stack development. My plans now include focusing on learning automated testing with tools like Selenium.
+                        Personal projects and research work developing web applications with real-time eye-tracking has
+                        provided a good grasp of full-stack development. My plans now include focusing on learning
+                        automated testing with tools like Selenium.
                     </p>
                     <div class="flex flex-wrap gap-2">
                         <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">HTML</span>
@@ -230,11 +271,13 @@ TODO:
                     </div>
                 </div>
                 <!-- Data Science -->
-                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 card-glow">
                     <h3 class="text-2xl font-bold mb-2">Data Science</h3>
                     <hr class="border-gray-700 mb-4">
                     <p class="text-gray-300 mb-4">
-                        Through my research position, as well as classes such as Intro to Machine Learning, I have been exposed to many forms of data analysis. Data management, machine learning analysis, data visualization, and more, are all skills I'm continually growing.
+                        Through my research position, as well as classes such as Intro to Machine Learning, I have been
+                        exposed to many forms of data analysis. Data management, machine learning analysis, data
+                        visualization, and more, are all skills I'm continually growing.
                     </p>
                     <div class="flex flex-wrap gap-2">
                         <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Python</span>
@@ -249,11 +292,13 @@ TODO:
                     </div>
                 </div>
                 <!-- Research Work -->
-                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 card-glow">
                     <h3 class="text-2xl font-bold mb-2">Research & Documentation</h3>
                     <hr class="border-gray-700 mb-4">
                     <p class="text-gray-300 mb-4">
-                        Primarily through my time as an undergraduate researcher, I have become familar with various forms of literature composition and software documentation technologies. Version control through Git has also been essential in my work. 
+                        Primarily through my time as an undergraduate researcher, I have become familar with various
+                        forms of literature composition and software documentation technologies. Version control through
+                        Git has also been essential in my work.
                     </p>
                     <div class="flex flex-wrap gap-2">
                         <span class="bg-gray-700 text-white px-3 py-1 rounded text-xs font-semibold">Git</span>
@@ -270,13 +315,13 @@ TODO:
             <hr class="border-gray-700 mb-8 max-w-4xl mx-auto">
             <div class="max-w-3xl mx-auto">
                 <!-- Comp. Sci. Degree -->
-                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 card-glow">
                     <h3 class="text-xl font-bold mb-1">Computer Science, B.S.</h3>
                     <div class="text-gray-400 text-sm mb-1">@ Northern Kentucky University</div>
                     <div class="text-gray-400 text-sm mb-1">Aug 2022 - May 2026</div>
                     <hr class="border-gray-700 mb-4">
                     <p class="text-gray-300 mb-4">
-                        Pursuing a Bachelor's in Computer Science at NKU as a L.I.F.E. Fellowship recepient. 
+                        Pursuing a Bachelor's in Computer Science at NKU as a L.I.F.E. Fellowship recepient.
                     </p>
                     <div>
                         <span class="font-semibold text-white">Relevant skills:</span>
@@ -287,15 +332,18 @@ TODO:
                     </div>
                 </div>
                 <!-- Research Fellow -->
-                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 card-glow">
                     <h3 class="text-xl font-bold mb-1">Undergraduate Research Fellow</h3>
                     <div class="text-gray-400 text-sm mb-1">@ Northern Kentucky University</div>
                     <div class="text-gray-400 text-sm mb-1">Sep 2023 - Present</div>
                     <hr class="border-gray-700 mb-4">
                     <p class="text-gray-300 mb-4">
-                        Undergraduate Research fellowship spanning all years of bachelor’s degree. Provides the ability to pursue and dedicate time to research. Generously founded in a partnership between NKU and Cincinnati’s Local Initiative For Excellence (L.I.F.E.) Foundation.
+                        Undergraduate Research fellowship spanning all years of bachelor’s degree. Provides the ability
+                        to pursue and dedicate time to research. Generously founded in a partnership between NKU and
+                        Cincinnati’s Local Initiative For Excellence (L.I.F.E.) Foundation.
                         <br>
-                        I have continued to work on various projects related to computer vision driven eye-tracking. Have been exposed to full-stack development, data analysis, academic writing, and more.
+                        I have continued to work on various projects related to computer vision driven eye-tracking.
+                        Have been exposed to full-stack development, data analysis, academic writing, and more.
                     </p>
                     <div>
                         <span class="font-semibold text-white">Relevant skills:</span>
@@ -307,13 +355,17 @@ TODO:
                     </div>
                 </div>
                 <!-- Tutoring -->
-                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 card-glow">
                     <h3 class="text-xl font-bold mb-1">Academic Tutor</h3>
                     <div class="text-gray-400 text-sm mb-1">@ Northern Kentucky University</div>
                     <div class="text-gray-400 text-sm mb-1">Mar 2024 - Jan 2025</div>
                     <hr class="border-gray-700 mb-4">
                     <p class="text-gray-300 mb-4">
-                        As an official tutor at NKU, I helped students understand fundamentals and large concepts of relevant coursework. Through this, I continually grew my leadership, teaching, and communication skills, all while reinforcing the knowledge in my own head. The areas I tutored in included Elementary and intermediate Python, Object Oriented Programming, Machine Learning, Mathematics, and more.
+                        As an official tutor at NKU, I helped students understand fundamentals and large concepts of
+                        relevant coursework. Through this, I continually grew my leadership, teaching, and communication
+                        skills, all while reinforcing the knowledge in my own head. The areas I tutored in included
+                        Elementary and intermediate Python, Object Oriented Programming, Machine Learning, Mathematics,
+                        and more.
                     </p>
                     <div>
                         <span class="font-semibold text-white">Relevant skills:</span>
@@ -332,16 +384,19 @@ TODO:
             <hr class="border-gray-700 mb-8 max-w-4xl mx-auto">
             <div class="max-w-3xl mx-auto">
                 <!-- Blink Detection -->
-                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 card-glow">
                     <h3 class="text-xl font-bold mb-1">
-                        <a href="https://ieeexplore.ieee.org/abstract/document/10569727" target="_blank" class="hover:text-indigo-400 underline transition">
+                        <a href="https://ieeexplore.ieee.org/abstract/document/10569727" target="_blank"
+                            class="hover:text-indigo-400 underline transition">
                             A Blink Detection Algorithm for Eye-Tracking Applications Based on Facial Geometry
                         </a>
                     </h3>
                     <div class="text-gray-400 text-sm mb-1">Egloff, T., Hall, E., Caporusso, N., Thaman, B. (2024)</div>
                     <hr class="border-gray-700 mb-4">
                     <p class="text-gray-300 mb-4">
-                        This paper presents three real-time blink detection algorithms for interpreting MediaPipe facial landmark data. Involved a lot of data analysis scripting, extracting useful data out of raw numbers.
+                        This paper presents three real-time blink detection algorithms for interpreting MediaPipe facial
+                        landmark data. Involved a lot of data analysis scripting, extracting useful data out of raw
+                        numbers.
                     </p>
                     <div>
                         <span class="font-semibold text-white">Journal:</span>
@@ -349,16 +404,19 @@ TODO:
                     </div>
                 </div>
                 <!-- Medeival Manuscripts -->
-                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6">
+                <div class="bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 card-glow">
                     <h3 class="text-xl font-bold mb-1">
-                        <a href="https://ieeexplore.ieee.org/abstract/document/10927836" target="_blank" class="hover:text-indigo-400 underline transition">
+                        <a href="https://ieeexplore.ieee.org/abstract/document/10927836" target="_blank"
+                            class="hover:text-indigo-400 underline transition">
                             Using Eye-Tracking and Data Visualization to Enhance the Study of Medieval Manuscripts
                         </a>
                     </h3>
-                    <div class="text-gray-400 text-sm mb-1">Hall, E., Egloff, T., Doan, H., Caporusso, N., O'Callaghan, T., Thaman, B. (2024)</div>
+                    <div class="text-gray-400 text-sm mb-1">Hall, E., Egloff, T., Doan, H., Caporusso, N., O'Callaghan,
+                        T., Thaman, B. (2024)</div>
                     <hr class="border-gray-700 mb-4">
                     <p class="text-gray-300 mb-4">
-                        This paper presents findings of tracking eye gaze when subjects viewed medeival manuscripts. Involved data analysis and visualization, generating heatmaps and statistical analyses.
+                        This paper presents findings of tracking eye gaze when subjects viewed medeival manuscripts.
+                        Involved data analysis and visualization, generating heatmaps and statistical analyses.
                     </p>
                     <div>
                         <span class="font-semibold text-white">Journal:</span>
@@ -370,14 +428,16 @@ TODO:
 
         <section id="contact" class="py-8 px-4 sm:px-6">
             <h2 class="text-4xl font-bold text-center mb-4">
-                <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Get in Touch with me!</span>
+                <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Get in Touch
+                    with me!</span>
             </h2>
             <div class="flex flex-col items-center mb-8">
                 <a href="mailto:tyler.egloff@gmail.com"
-                   class="flex items-center px-6 py-3 border-2 border-indigo-400 rounded-lg text-indigo-200 hover:bg-indigo-500 hover:text-white transition font-medium text-lg mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    class="flex items-center px-6 py-3 border-2 border-indigo-400 rounded-lg text-indigo-200 hover:bg-indigo-500 hover:text-white transition font-medium text-lg mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M16 12l-4-4-4 4m8 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v4" />
+                            d="M16 12l-4-4-4 4m8 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6m16-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v4" />
                     </svg>
                     Send me an email
                 </a>
@@ -426,7 +486,7 @@ TODO:
         class="hidden fixed bottom-8 right-8 z-50 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full p-3 shadow-lg transition-opacity duration-300"
         aria-label="Back to top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
         </svg>
     </button>
 

@@ -1,4 +1,4 @@
-// Mobile menu toggle button functionality 
+// -- Mobile menu toggle button functionality 
 const menuBtn = document.getElementById('menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 const menuIcon = document.getElementById('menu-icon');
@@ -20,7 +20,7 @@ window.addEventListener('resize', () => {
     }
 });
 
-// Shooting star 
+// -- Shooting star 
 function createShootingStar() {
     const container = document.getElementById('shooting-star-container');
     
@@ -106,7 +106,7 @@ function createShootingStar() {
     };
 }
 
-// Shooting star loop w/ random timeout
+// -- Shooting star loop w/ random timeout
 function shootingStarLoop() {
     createShootingStar();
     setTimeout(shootingStarLoop, Math.random() * 10000 + 20000);
@@ -114,7 +114,7 @@ function shootingStarLoop() {
 
 shootingStarLoop();
 
-// Profile card text
+// -- Profile card text
 const textContent = ["Developer", "Student", "Researcher"];
 let contentIndex = 0;
 let charIndex = 0;
@@ -151,3 +151,79 @@ function textLoop() {
 }
 
 textLoop();
+
+// -- Alien animation
+const svgs = [
+  `<svg viewBox="0 0 512 512" width="24" height="24" class="w-6 h-6"><g><path fill="#fff" d="m468.34,111.66l1,69.68l-42.65,0l0,-42.68l-42.69,0l0,-21.32l42.69,0l0,-64l-64,0l0,42.65l-42.69,0l0,42.67l-128,0l0,-42.67l-42.66,0l0,-42.65l-64,0l0,64l42.66,0l0,21.32l-42.66,0l0,42.68l-42.65,0l1,-75.68l-44.69,1l-0.25,222.08l48.75,-0.25l-0.25,-27.25l15.75,0.75l1,28.67l21.34,0l2,36.33l23.66,2l0,40.67l-61.31,-3l0,52l77.91,2.75l-0.09,-30.25l30.83,0.5l-1,-60.32l201.35,3l3,63.32l32.65,3l2.25,33.25l82.25,4.25l-2.5,-51.5l-65.34,-4l-3,-45.67l20.69,0l-2,-46.33l21.31,0l-1,-26.67l18.25,0.75l1.25,28.75l45.5,1.5l0,-222.33l-43.66,-1zm-276.34,133.68l-64,0l0,-64l64,0l0,64zm192,0l-64,0l0,-64l64,0l0,64z"/></g></svg>`,
+  `<svg viewBox="0 0 512 512" width="24" height="24" class="w-6 h-6"><g><path fill="#fff" d="m469.34,266.66l0,-85.32l-42.65,0l0,-42.68l-42.69,0l0,-21.32l42.69,0l0,-64l-64,0l0,42.65l-42.69,0l0,42.67l-128,0l0,-42.67l-42.66,0l0,-42.65l-64,0l0,64l42.66,0l0,21.32l-42.66,0l0,42.68l-42.65,0l0,85.32l-42.69,0l0,149.33l64,0l0,-85.33l21.34,0l0,85.33l42.66,0l0,42.67l106.69,0l0,-64l-85.35,0l0,-21.32l213.35,0l0,21.32l-85.35,0l0,64l106.66,0l0,-42.67l42.69,0l0,-85.33l21.31,0l0,85.33l64,0l0,-149.33l-42.66,0zm-277.34,-21.32l-64,0l0,-64l64,0l0,64zm192,0l-64,0l0,-64l64,0l0,64z"/></g></svg>`
+];
+
+let alienExists = null;
+
+function moveAlien() {
+    if (!alienExists) {
+        alienExists = document.createElement("div");
+        alienExists.style.position = "fixed";
+        alienExists.style.left = "16px";
+        alienExists.style.top = "-48px";
+        alienExists.style.zIndex = "100";
+        alienExists.style.transition = "none";
+        alienExists.style.pointerEvents = "none";
+        document.body.appendChild(alienExists);
+    }
+
+    let frame = 0;
+    let lastFrameTime = 0;
+    let startTime = performance.now();
+    let entering = true;
+    let leaving = false;
+    let baseY = -48;
+    const targetY = 16;
+    let shake = 0;
+
+    function animate(currentTime) {
+        const elapsed = currentTime - startTime;
+        
+        if (elapsed - lastFrameTime > 500) {
+            frame = (frame + 1) % 2;
+            alienExists.innerHTML = svgs[frame];
+            lastFrameTime = elapsed;
+        }
+
+        // Horizontal vibration
+        shake = Math.sin(elapsed * 0.005) * 5;
+
+        if (entering) {
+            baseY += (targetY - baseY) * 0.02;
+            if (Math.abs(baseY - targetY) < 1.5) {
+                baseY = targetY;
+                entering = false;
+                setTimeout(() => leaving = true, 2000 + Math.random() * 1000);
+            }
+        }
+
+        if (leaving) {
+            baseY -= 8;
+            if (baseY < -64) {
+                alienExists.style.top = "-32px";
+                alienExists.innerHTML = "";
+                return;
+            }
+        }
+
+        alienExists.style.top = `${baseY}px`;
+        alienExists.style.left = `${24 + shake}px`;
+        requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+}
+
+function alienLoop() {
+    moveAlien();
+    setTimeout(alienLoop, Math.random() * 30000 + 30000)
+}
+
+// Wait 25 seconds until first time alien comes out
+setTimeout(() => {
+    alienLoop();
+}, 25000)

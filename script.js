@@ -23,16 +23,20 @@ window.addEventListener('resize', () => {
 
 // Scroll to top button functionality
 // ---------------------------------------------------------
+// ensure `toTopBtn` is declared early so listeners can reference it safely
+const toTopBtn = document.getElementById('toTopBtn');
+
 window.addEventListener('scroll', () => {
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     const shouldShow = window.scrollY > 100 && window.scrollY > scrollable - 200;
-    toTopBtn.classList.toggle('hidden', !shouldShow);
+    if (toTopBtn) toTopBtn.classList.toggle('hidden', !shouldShow);
 });
 
 // Shooting stars
 // ---------------------------------------------------------
 function createShootingStar() {
     const container = document.getElementById('shooting-star-container');
+    if (!container) return; // graceful noop when container isn't present yet
 
     // Parameters
     const startY = Math.random() * window.innerHeight;
@@ -133,12 +137,15 @@ let typing = true;
 const text = document.getElementById('profile-text');
 const cursor = document.getElementById('cursor');
 
-// Set cursor to blink on an interval
-setInterval(() => {
-    cursor.style.opacity = cursor.style.opacity === "0" ? "1" : "0";
-}, 500);
+// Set cursor to blink on an interval (only if element exists)
+if (cursor) {
+    setInterval(() => {
+        cursor.style.opacity = cursor.style.opacity === "0" ? "1" : "0";
+    }, 500);
+}
 
 function textLoop() {
+    if (!text) return; // nothing to do when profile text isn't present on this page
     const current = textContent[contentIndex];
     if (typing) {
         if (charIndex < current.length) {
@@ -159,7 +166,7 @@ function textLoop() {
         }
     }
 }
-textLoop();
+if (text) textLoop();
 
 // Alien animation
 // ---------------------------------------------------------
@@ -241,7 +248,6 @@ setTimeout(() => {
 // Section visibility management and scroll-to-top button
 // ---------------------------------------------------------
 const sections = document.querySelectorAll('main > section');
-const toTopBtn = document.getElementById('toTopBtn');
 
 function showAllSections() {
     sections.forEach(section => {
@@ -258,6 +264,7 @@ function hideOtherSections(activeSectionId) {
 }
 
 function updateButtonState(isHomePage) {
+    if (!toTopBtn) return;
     if (isHomePage) {
         toTopBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>';
         toTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -267,8 +274,9 @@ function updateButtonState(isHomePage) {
     }
 }
 
-function handleNavigation(targetId) {
+function handleNavigation(targetId, scrollToSection = false) {
     const isHomePage = targetId === 'home' || targetId === '';
+    const isBlogPage = targetId === 'blog';
     
     if (isHomePage) {
         showAllSections();
@@ -279,6 +287,19 @@ function handleNavigation(targetId) {
     
     updateButtonState(isHomePage);
     updateButtonVisibility();
+    
+    // Re-render blog posts based on view (3 for home, all for #blog)
+    if (cachedBlogPosts && cachedBlogPosts.length) {
+        renderBlogPosts(isBlogPage ? null : 3);
+    }
+    
+    // Scroll to section for in-page navigation (not for initial page load)
+    if (scrollToSection && targetId && !isHomePage) {
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            setTimeout(() => targetSection.scrollIntoView({ behavior: 'instant' }), 0);
+        }
+    }
     
     // Close mobile menu if open
     if (!mobileMenu.classList.contains('hidden')) {
@@ -292,10 +313,10 @@ function updateButtonVisibility() {
     if (isHomePage) {
         // On home page, only show if scrolled
         const shouldShow = window.scrollY > 100;
-        toTopBtn.classList.toggle('hidden', !shouldShow);
+        if (toTopBtn) toTopBtn.classList.toggle('hidden', !shouldShow);
     } else {
         // On other pages, always show (unless at top on load)
-        toTopBtn.classList.remove('hidden');
+        if (toTopBtn) toTopBtn.classList.remove('hidden');
     }
 }
 
@@ -319,10 +340,183 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial visibility check after a slight delay to allow rendering
     setTimeout(updateButtonVisibility, 100);
+    // Load blog list into index page (if container exists)
+    if (document.getElementById('blog-list')) {
+        loadBlogIndex();
+    }
 });
 
-// Handle browser back/forward navigation
+// Handle browser back/forward navigation (in-page hash changes)
 window.addEventListener('hashchange', function() {
     const targetId = window.location.hash.substring(1);
-    handleNavigation(targetId || 'home');
+    handleNavigation(targetId || 'home', true); // true = scroll to section for in-page nav
 });
+
+// -----------------------------
+// Blog index loader
+// -----------------------------
+let cachedBlogPosts = []; // Store loaded posts for reuse
+
+async function tryFetchJson(url) {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) return await res.json();
+        // If server returns JSON with .json extension but wrong header
+        try { return JSON.parse(await res.text()); } catch (e) { return null; }
+    } catch (e) {
+        return null;
+    }
+}
+
+async function tryFetchDirectoryListing(url) {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const text = await res.text();
+        // naive parse: find href="...md" or >...md< links
+        const files = [];
+        const hrefRe = /href\s*=\s*"([^"]+\.md)"/gi;
+        let m;
+        while ((m = hrefRe.exec(text)) !== null) files.push(m[1].replace(/.*\//, ''));
+        if (files.length) return files;
+        const plainRe = />([^<]*\.md)<\/a>/gi;
+        while ((m = plainRe.exec(text)) !== null) files.push(m[1].trim());
+        return files.length ? files : null;
+    } catch (e) {
+        return null;
+    }
+}
+
+function stripMarkdown(md) {
+    // Remove code fences
+    md = md.replace(/```[\s\S]*?```/g, '');
+    // Remove inline code
+    md = md.replace(/`[^`]*`/g, '');
+    // Remove images keeping alt text
+    md = md.replace(/!\[(.*?)\]\((.*?)\)/g, '$1');
+    // Replace links with link text
+    md = md.replace(/\[(.*?)\]\((.*?)\)/g, '$1');
+    // Remove headings
+    md = md.replace(/^#+\s*/gm, '');
+    // Remove emphasis
+    md = md.replace(/\*\*(.*?)\*\*/g, '$1');
+    md = md.replace(/\*(.*?)\*/g, '$1');
+    md = md.replace(/_(.*?)_/g, '$1');
+    // Remove remaining markdown bullets and blockquotes
+    md = md.replace(/^>\s*/gm, '');
+    md = md.replace(/^[\-*+]\s+/gm, '');
+    // Collapse whitespace
+    return md.replace(/\s+/g, ' ').trim();
+}
+
+function createBlogCard(post) {
+    const art = document.createElement('article');
+    art.className = 'bg-gray-800 rounded-2xl shadow-lg p-6 card-glow';
+    const h3 = document.createElement('h3');
+    h3.className = 'text-2xl font-bold mb-2';
+    h3.textContent = post.title;
+    const p = document.createElement('p');
+    p.className = 'text-gray-300 mb-4';
+    p.textContent = post.excerpt || 'No preview available.';
+    const a = document.createElement('a');
+    a.className = 'text-indigo-400 hover:underline font-semibold';
+    a.href = 'blog.html?post=' + encodeURIComponent(post.file);
+    a.textContent = 'Read full post →';
+
+    art.appendChild(h3);
+    art.appendChild(p);
+    art.appendChild(a);
+    return art;
+}
+
+function renderBlogPosts(limit = null) {
+    const container = document.getElementById('blog-list');
+    if (!container || !cachedBlogPosts.length) return;
+    
+    container.innerHTML = '';
+    const postsToShow = limit ? cachedBlogPosts.slice(0, limit) : cachedBlogPosts;
+    
+    postsToShow.forEach(post => {
+        container.appendChild(createBlogCard(post));
+    });
+    
+    // Add "View all" button if we're limiting and there are more posts
+    if (limit && cachedBlogPosts.length > limit) {
+        const btnWrapper = document.createElement('div');
+        btnWrapper.className = 'text-center mt-6';
+        const btn = document.createElement('a');
+        btn.href = '#blog';
+        btn.className = 'inline-block px-6 py-3 border-2 border-indigo-400 rounded-lg text-indigo-200 bg-gray-900 hover:bg-indigo-500 hover:text-white transition font-medium text-lg';
+        btn.textContent = 'View all blog posts →';
+        btnWrapper.appendChild(btn);
+        container.appendChild(btnWrapper);
+    }
+}
+
+async function loadBlogIndex() {
+    const container = document.getElementById('blog-list');
+    container.innerHTML = '<div class="p-6 text-gray-300">Loading posts...</div>';
+
+    // Try known manifest filenames
+    const manifests = ['posts/index.json', 'posts.json', 'posts/list.json'];
+    let files = null;
+    for (const m of manifests) {
+        const data = await tryFetchJson(m);
+        if (data && Array.isArray(data)) { files = data; break; }
+    }
+
+    // Try directory listing fallback
+    if (!files) {
+        files = await tryFetchDirectoryListing('posts/');
+    }
+
+    if (!files || !files.length) {
+        container.innerHTML = '<div class="p-6 text-gray-300">No posts found in <strong>posts/</strong>. Add .md files or provide a posts/index.json manifest.</div>';
+        return;
+    }
+
+    // Normalize file names (only .md)
+    files = Array.from(new Set(files.map(f => f.replace(/^.*\//, '').trim()))).filter(f => f.toLowerCase().endsWith('.md'));
+    if (!files.length) {
+        container.innerHTML = '<div class="p-6 text-gray-300">No .md files found in <strong>posts/</strong>.</div>';
+        return;
+    }
+
+    // Fetch each file and build post data
+    cachedBlogPosts = [];
+    for (const file of files) {
+        try {
+            const res = await fetch('posts/' + file);
+            if (!res.ok) continue;
+            let md = await res.text();
+            // strip YAML frontmatter
+            if (md.trim().startsWith('---')) {
+                const end = md.indexOf('\n---', 3);
+                if (end !== -1) md = md.slice(md.indexOf('\n', 3) + 1 + (end - 0));
+            }
+            const lines = md.split(/\r?\n/);
+            const headingLine = lines.find(l => l.trim().startsWith('#')) || '';
+            const title = headingLine ? headingLine.replace(/^#+\s*/, '').trim() : file.replace(/\.md$/i, '');
+
+            // find first non-empty paragraph (skip headings and empty lines)
+            const blocks = md.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+            let firstText = '';
+            for (const b of blocks) {
+                if (!/^#+/.test(b)) { firstText = b; break; }
+            }
+            if (!firstText && blocks.length) firstText = blocks[0];
+            const plain = stripMarkdown(firstText || '');
+            const excerpt = plain.length > 160 ? plain.slice(0, 157) + '...' : plain;
+
+            cachedBlogPosts.push({ file, title, excerpt });
+        } catch (e) {
+            console.warn('Error loading post', file, e);
+        }
+    }
+
+    // Render with limit based on current view
+    const showAll = window.location.hash === '#blog';
+    renderBlogPosts(showAll ? null : 3);
+}

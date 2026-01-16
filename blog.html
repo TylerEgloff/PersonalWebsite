@@ -48,6 +48,56 @@
             opacity: 1;
             transform: rotate(-45deg) translateY(120%);
         }
+
+        /* Markdown content styling */
+        #post-content a {
+            color: #818cf8;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        #post-content a:hover {
+            color: #a5b4fc;
+        }
+        #post-content ul, #post-content ol {
+            padding-left: 1.5rem;
+        }
+        #post-content ul {
+            list-style-type: disc;
+        }
+        #post-content ol {
+            list-style-type: decimal;
+        }
+        #post-content li {
+            margin: 0.25rem 0;
+        }
+        #post-content blockquote {
+            border-left: 3px solid #6366f1;
+            padding-left: 1rem;
+            color: #9ca3af;
+            font-style: italic;
+        }
+        #post-content code:not(.mermaid code) {
+            background: rgba(99, 102, 241, 0.15);
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+        }
+        #post-content pre {
+            background: #1f2937;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+        #post-content pre code {
+            background: none;
+            padding: 0;
+        }
+        #post-content strong {
+            color: #f3f4f6;
+        }
+        #post-content em {
+            color: #d1d5db;
+        }
     </style>
 </head>
 
@@ -93,11 +143,28 @@
     </header>
 
     <main class="max-w-6xl mx-auto px-4 pt-16 pb-6" id="blog-main">
-        <section id="post" class="py-6 px-4 sm:px-6">
+        <section id="post" class="py-6 px-4 sm:px-6 relative">
             <div class="max-w-5xl mx-auto prose prose-invert prose-lg">
                 <h1 id="post-title" class="text-6xl md:text-7xl font-extrabold mb-6 text-center">Blog Post</h1>
 
-                <article id="post-content" class="bg-gray-800 rounded-2xl shadow-lg pt-1 p-8 max-w-4xl mx-auto">
+                <!-- Table of Contents - right sidebar -->
+                <nav id="toc" class="hidden xl:block fixed right-8 top-32 w-56 max-h-[calc(100vh-10rem)] overflow-y-auto text-sm">
+                    <div class="bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 border border-gray-700">
+                        <h4 class="text-gray-400 uppercase text-xs font-semibold tracking-wider mb-3">Contents</h4>
+                        <ul id="toc-list" class="flex flex-col gap-2 text-gray-300">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                </nav>
+
+                <article id="post-content" class="bg-gray-800 rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
+                    <div id="post-byline" class="hidden">
+                        <div class="flex justify-between items-center text-gray-300 text-base">
+                            <span id="post-author"></span>
+                            <span id="post-date"></span>
+                        </div>
+                        <hr class="border-gray-600 my-1">
+                    </div>
                     <p class="text-gray-300">Loading post...</p>
                 </article>
 
@@ -166,6 +233,21 @@
     </button>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#6366f1',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#818cf8',
+                lineColor: '#9ca3af',
+                secondaryColor: '#374151',
+                tertiaryColor: '#1f2937'
+            }
+        });
+    </script>
     <script src="script.js"></script>
     <script>
         (function () {
@@ -173,6 +255,9 @@
             const postParam = params.get('post');
             const contentEl = document.getElementById('post-content');
             const titleEl = document.getElementById('post-title');
+            const bylineEl = document.getElementById('post-byline');
+            const authorEl = document.getElementById('post-author');
+            const dateEl = document.getElementById('post-date');
 
             // Configure marked to preserve single-line breaks and use GFM
             if (window.marked && marked.setOptions) marked.setOptions({ gfm: true, breaks: true });
@@ -202,34 +287,164 @@
                     lines.splice(titleLineIndex, 1);
                     if (lines[titleLineIndex] && lines[titleLineIndex].trim() === '') lines.splice(titleLineIndex, 1);
                 }
+
+                // Find and remove the byline (## Author | Date format)
+                let bylineIndex = -1;
+                for (let i = 0; i < lines.length; i++) {
+                    if (lines[i].trim().length && /^##\s+/.test(lines[i].trim()) && lines[i].includes('|')) {
+                        bylineIndex = i;
+                        break;
+                    }
+                }
+                if (bylineIndex !== -1) {
+                    const bylineText = lines[bylineIndex].replace(/^##\s+/, '').trim();
+                    const [author, date] = bylineText.split('|').map(s => s.trim());
+                    if (author && date) {
+                        authorEl.textContent = author;
+                        dateEl.textContent = date;
+                        bylineEl.classList.remove('hidden');
+                    }
+                    // Remove byline and any immediately following empty line
+                    lines.splice(bylineIndex, 1);
+                    if (lines[bylineIndex] && lines[bylineIndex].trim() === '') lines.splice(bylineIndex, 1);
+                }
+
                 const bodyMd = lines.join('\n');
 
                 // Render markdown (with line-breaks preserved)
                 if (window.marked) {
-                    contentEl.innerHTML = marked.parse(bodyMd);
+                    // Create a div for the markdown content (preserve byline)
+                    const markdownDiv = document.createElement('div');
+                    markdownDiv.className = 'flex flex-col gap-2 prose prose-invert prose-indigo max-w-none';
+                    markdownDiv.innerHTML = marked.parse(bodyMd);
+                    // Clear loading text but keep byline
+                    const loadingText = contentEl.querySelector('p.text-gray-300');
+                    if (loadingText) loadingText.remove();
+                    contentEl.appendChild(markdownDiv);
 
-                    // Style h3 elements (###) larger and prominent
-                    const h3s = contentEl.querySelectorAll('h3');
-                    h3s.forEach(h => h.classList.add('text-2xl', 'md:text-3xl', 'font-semibold', 'mt-6', 'mb-2'));
+                    // Style h3 elements (###) - larger gap above to separate sections, tight below
+                    const h3s = markdownDiv.querySelectorAll('h3');
+                    h3s.forEach((h, i) => {
+                        h.classList.add('text-2xl', 'md:text-3xl', 'font-semibold');
+                        if (i > 0 || h.previousElementSibling) h.classList.add('mt-4');
+                        // Add ID for TOC navigation
+                        const slug = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                        h.id = slug || 'section-' + i;
+                        h.style.scrollMarginTop = '4rem';
+                    });
 
-                    // Style h5 elements (#####) as smaller subheadings
-                    const h5s = contentEl.querySelectorAll('h5');
-                    h5s.forEach(h => h.classList.add('text-lg', 'md:text-xl', 'font-semibold', 'mt-4', 'mb-2'));
+                    // Style h5 elements (#####) - medium gap above, tight below
+                    const h5s = markdownDiv.querySelectorAll('h5');
+                    h5s.forEach((h, i) => {
+                        h.classList.add('text-lg', 'md:text-xl', 'font-semibold');
+                        if (h.previousElementSibling) h.classList.add('mt-2');
+                        // Add ID for TOC navigation
+                        const slug = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                        h.id = slug || 'subsection-' + i;
+                        h.style.scrollMarginTop = '4rem';
+                    });
+
+                    // Build Table of Contents
+                    const tocList = document.getElementById('toc-list');
+                    const allHeadings = markdownDiv.querySelectorAll('h3, h5');
+                    allHeadings.forEach(h => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = '#' + h.id;
+                        a.textContent = h.textContent;
+                        a.className = 'hover:text-indigo-400 transition block';
+                        if (h.tagName === 'H5') {
+                            li.className = 'pl-3 text-gray-400';
+                        }
+                        a.onclick = (e) => {
+                            e.preventDefault();
+                            h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        };
+                        li.appendChild(a);
+                        tocList.appendChild(li);
+                    });
 
                     // Style tables
-                    const tables = contentEl.querySelectorAll('table');
+                    const tables = markdownDiv.querySelectorAll('table');
                     tables.forEach(table => {
-                        table.classList.add('w-full', 'my-6', 'text-sm', 'md:text-base', 'border-collapse', 'rounded-lg', 'overflow-hidden');
+                        table.classList.add('w-full', 'text-sm', 'md:text-base', 'border-collapse', 'rounded-lg', 'overflow-hidden');
                     });
-                    const ths = contentEl.querySelectorAll('th');
+                    const ths = markdownDiv.querySelectorAll('th');
                     ths.forEach(th => th.classList.add('bg-gray-700', 'text-left', 'px-4', 'py-2', 'font-semibold', 'border-b', 'border-gray-600'));
-                    const tds = contentEl.querySelectorAll('td');
+                    const tds = markdownDiv.querySelectorAll('td');
                     tds.forEach(td => td.classList.add('px-4', 'py-2', 'border-b', 'border-gray-700', 'align-top'));
-                    const trs = contentEl.querySelectorAll('tbody tr');
+                    const trs = markdownDiv.querySelectorAll('tbody tr');
                     trs.forEach((tr, i) => tr.classList.add(i % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'));
 
                     // Ensure paragraphs keep intentional line breaks: convert single-line paragraphs that contain <br> from marked.breaks
                     // (marked with `breaks: true` already outputs <br>, so no further action needed)
+
+                    // Render Mermaid diagrams (supports responsive: "flowchart LR-TD" = LR on desktop, TD on mobile)
+                    const mermaidBlocks = markdownDiv.querySelectorAll('code.language-mermaid');
+                    const responsiveContainers = [];
+                    
+                    mermaidBlocks.forEach((block, i) => {
+                        const pre = block.parentElement;
+                        const code = block.textContent;
+                        
+                        // Check for responsive direction syntax: "flowchart LR-TD"
+                        const responsiveMatch = code.match(/^flowchart\s+(LR|RL|TB|TD|BT)-(LR|RL|TB|TD|BT)/m);
+                        
+                        if (responsiveMatch) {
+                            const [fullMatch, desktopDir, mobileDir] = responsiveMatch;
+                            const wrapper = document.createElement('div');
+                            
+                            // Desktop version - render visible first, hide later
+                            const desktopContainer = document.createElement('div');
+                            desktopContainer.className = 'mermaid flex justify-center my-4';
+                            desktopContainer.dataset.responsive = 'desktop';
+                            desktopContainer.textContent = code.replace(fullMatch, 'flowchart ' + desktopDir);
+                            
+                            // Mobile version - render visible first, hide later
+                            const mobileContainer = document.createElement('div');
+                            mobileContainer.className = 'mermaid flex justify-center my-4';
+                            mobileContainer.dataset.responsive = 'mobile';
+                            mobileContainer.textContent = code.replace(fullMatch, 'flowchart ' + mobileDir);
+                            
+                            wrapper.appendChild(desktopContainer);
+                            wrapper.appendChild(mobileContainer);
+                            pre.replaceWith(wrapper);
+                            
+                            responsiveContainers.push(desktopContainer, mobileContainer);
+                        } else {
+                            const container = document.createElement('div');
+                            container.className = 'mermaid flex justify-center my-4';
+                            container.textContent = code;
+                            pre.replaceWith(container);
+                        }
+                    });
+                    
+                    if (mermaidBlocks.length) {
+                        mermaid.run().then(() => {
+                            // Apply responsive visibility after render completes
+                            responsiveContainers.forEach(c => {
+                                if (c.dataset.responsive === 'desktop') {
+                                    c.classList.add('hidden', 'md:flex');
+                                } else {
+                                    c.classList.add('md:hidden');
+                                }
+                            });
+                        });
+                    }
+                    
+                    // Auto-number figures (figcaptions inside <figure> elements)
+                    const figcaptions = markdownDiv.querySelectorAll('figure > figcaption, [data-figure] > figcaption');
+                    figcaptions.forEach((cap, i) => {
+                        const num = i + 1;
+                        cap.innerHTML = `<strong>Figure ${num}.</strong> ${cap.innerHTML}`;
+                    });
+                    
+                    // Auto-number tables (captions or data-table-caption elements)
+                    const tableCaptions = markdownDiv.querySelectorAll('[data-table] > caption, [data-table-caption]');
+                    tableCaptions.forEach((cap, i) => {
+                        const num = i + 1;
+                        cap.innerHTML = `<strong>Table ${num}.</strong> ${cap.innerHTML}`;
+                    });
                 } else {
                     contentEl.textContent = bodyMd;
                 }

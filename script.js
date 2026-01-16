@@ -394,6 +394,8 @@ function stripMarkdown(md) {
     md = md.replace(/```[\s\S]*?```/g, '');
     // Remove inline code
     md = md.replace(/`[^`]*`/g, '');
+    // Remove HTML tags
+    md = md.replace(/<[^>]+>/g, '');
     // Remove images keeping alt text
     md = md.replace(/!\[(.*?)\]\((.*?)\)/g, '$1');
     // Replace links with link text
@@ -500,13 +502,16 @@ async function loadBlogIndex() {
             const headingLine = lines.find(l => l.trim().startsWith('#')) || '';
             const title = headingLine ? headingLine.replace(/^#+\s*/, '').trim() : file.replace(/\.md$/i, '');
 
-            // find first non-empty paragraph (skip headings and empty lines)
-            const blocks = md.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+            // find first plain text line (skip headings, HTML, and empty lines)
+            const allLines = md.split(/\r?\n/);
             let firstText = '';
-            for (const b of blocks) {
-                if (!/^#+/.test(b)) { firstText = b; break; }
+            for (const line of allLines) {
+                const trimmed = line.trim();
+                // Skip empty lines, headings, and HTML
+                if (!trimmed || /^#+/.test(trimmed) || /^</.test(trimmed)) continue;
+                firstText = trimmed;
+                break;
             }
-            if (!firstText && blocks.length) firstText = blocks[0];
             const plain = stripMarkdown(firstText || '');
             const excerpt = plain.length > 160 ? plain.slice(0, 157) + '...' : plain;
 

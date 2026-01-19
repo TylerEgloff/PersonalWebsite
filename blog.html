@@ -150,7 +150,8 @@
     <main class="max-w-6xl mx-auto px-4 pt-16 pb-6" id="blog-main">
         <section id="post" class="py-6 px-4 sm:px-6 relative">
             <div class="max-w-5xl mx-auto prose prose-invert prose-lg">
-                <h1 id="post-title" class="text-6xl md:text-7xl font-extrabold mb-6 text-center">Blog Post</h1>
+                <h1 id="post-title" class="text-6xl md:text-7xl font-extrabold mb-2 text-center">Blog Post</h1>
+                <p id="post-subtitle" class="text-gray-400 text-lg md:text-xl text-center mb-6 hidden"></p>
 
                 <!-- Table of Contents - left sidebar -->
                 <nav id="toc" class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 max-w-[85vw] bg-gray-900/95 backdrop-blur-sm border-r border-gray-700 z-40 transition-transform duration-300 overflow-visible" style="transform: translateX(-100%);">
@@ -268,6 +269,7 @@
             const postParam = params.get('post');
             const contentEl = document.getElementById('post-content');
             const titleEl = document.getElementById('post-title');
+            const subtitleEl = document.getElementById('post-subtitle');
             const bylineEl = document.getElementById('post-byline');
             const authorEl = document.getElementById('post-author');
             const dateEl = document.getElementById('post-date');
@@ -299,6 +301,19 @@
                     // Remove that line and any immediately following empty line
                     lines.splice(titleLineIndex, 1);
                     if (lines[titleLineIndex] && lines[titleLineIndex].trim() === '') lines.splice(titleLineIndex, 1);
+                }
+
+                // Find and remove the subtitle (first ## heading)
+                const subtitleIndex = lines.findIndex(l => l.trim().startsWith('## '));
+                if (subtitleIndex !== -1) {
+                    const subtitleText = lines[subtitleIndex].trim().slice(3).trim();
+                    if (subtitleText) {
+                        subtitleEl.textContent = subtitleText;
+                        subtitleEl.classList.remove('hidden');
+                    }
+                    // Remove subtitle line and any immediately following empty line
+                    lines.splice(subtitleIndex, 1);
+                    if (lines[subtitleIndex] && lines[subtitleIndex].trim() === '') lines.splice(subtitleIndex, 1);
                 }
 
                 // Find and remove the byline (## Author | Date format)

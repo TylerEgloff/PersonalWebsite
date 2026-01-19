@@ -417,18 +417,18 @@ function createBlogCard(post) {
     const art = document.createElement('article');
     art.className = 'bg-gray-800 rounded-2xl shadow-lg p-6 card-glow';
     const h3 = document.createElement('h3');
-    h3.className = 'text-2xl font-bold mb-2';
+    h3.className = 'text-2xl font-bold mb-1';
     h3.textContent = post.title;
-    const p = document.createElement('p');
-    p.className = 'text-gray-300 mb-4';
-    p.textContent = post.excerpt || 'No preview available.';
+    const subtitle = document.createElement('p');
+    subtitle.className = 'text-gray-400 text-sm mb-4';
+    subtitle.textContent = post.subtitle || 'No subtitle available.';
     const a = document.createElement('a');
     a.className = 'text-indigo-400 hover:underline font-semibold';
     a.href = 'blog.html?post=' + encodeURIComponent(post.file);
     a.textContent = 'Read full post →';
 
     art.appendChild(h3);
-    art.appendChild(p);
+    art.appendChild(subtitle);
     art.appendChild(a);
     return art;
 }
@@ -499,23 +499,16 @@ async function loadBlogIndex() {
                 if (end !== -1) md = md.slice(md.indexOf('\n', 3) + 1 + (end - 0));
             }
             const lines = md.split(/\r?\n/);
+            
+            // Find title (first # heading)
             const headingLine = lines.find(l => l.trim().startsWith('#')) || '';
             const title = headingLine ? headingLine.replace(/^#+\s*/, '').trim() : file.replace(/\.md$/i, '');
 
-            // find first plain text line (skip headings, HTML, and empty lines)
-            const allLines = md.split(/\r?\n/);
-            let firstText = '';
-            for (const line of allLines) {
-                const trimmed = line.trim();
-                // Skip empty lines, headings, and HTML
-                if (!trimmed || /^#+/.test(trimmed) || /^</.test(trimmed)) continue;
-                firstText = trimmed;
-                break;
-            }
-            const plain = stripMarkdown(firstText || '');
-            const excerpt = plain.length > 160 ? plain.slice(0, 157) + '...' : plain;
+            // Find subtitle (first ## heading)
+            const subtitleLine = lines.find(l => l.trim().startsWith('## ')) || '';
+            const subtitle = subtitleLine ? subtitleLine.trim().slice(3).trim() : '';
 
-            cachedBlogPosts.push({ file, title, excerpt });
+            cachedBlogPosts.push({ file, title, subtitle });
         } catch (e) {
             console.warn('Error loading post', file, e);
         }

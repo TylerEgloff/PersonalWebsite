@@ -1,5 +1,5 @@
 # Winning My First Hackathon
-## How a risky idea can be shipped in 24 hours with proper planning
+## How risky ideas can be made safe through structure
 ## Tyler Egloff | January 2026
 
 ### Introduction

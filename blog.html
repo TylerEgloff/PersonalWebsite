@@ -8,8 +8,63 @@
     <link
         href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwbGgscGxoLHBsaCxwbGgsAAAD/AAAA/wAAAP8AAAD/HBsaCxwbGgscGxoLHBsaCxwbGgscGxoLAAAAAAAAAAAcGxoLHBsaCwAAAP8AAAD/o1Uq/6NVKv+jVSr/o1Uq/wAAAP8AAAD/HBsaCxwbGgscGxoLHBsaCwAAAAAcGxoLHBsaCwAAAP8Os63/DrOt/6NVKv+jVSr/FIeD/w6zrf8Os63/o1Uq/wAAAP8cGxoLHBsaCxwbGgscGxoLHBsaCwAAAP8nj4v/qG5N/6huTf+jVSr/o1Uq/w6zrf8Os63/FIeD/6NVKv+jVSr/AAAA/xwbGgscGxoLHBsaCxwbGgsKDQ3/J4+L/9mcav/jhE//44RP/+OET/8Os63/DrOt/xSHg/8Uh4P/o1Uq/wAAAP8cGxoLHBsaCwAAAP/6jxv/44RP/9mcav9Bv7v/P8zH/yePi/8Uh4P/DrOt/w6zrf8Uh4P/FIeD/6NVKv8AAAD/HBsaCxwbGgsAAAD/+o8b/+OET//jhE//P8zH/z/Mx/8Uh4P/w6zrf8Os63/FIeD/xSHg/8Uh4P/AAAA/xwbGgscGxoLAAAA//qPG//jhE//44RP/+OET/9Vq6j/Vauo/xSHg/8Os63/DrOt/xSHg/8Uh4P/o1Uq/wAAAP8cGxoLHBsaCwAAAAAAAAD/+o8b/+OET//jhE//P8zH/z/Mx//jhE//44RP/+OET//jhE//FIeD/wAAAP8cGxoLHBsaCxwbGgscGxoLAAAA//qPG//ZnGr/44RP/+OET/8Uh4P/44RP/+OET//jhE//DrOt/xSHg/8AAAD/HBsaCwAAAAAAAAAAHBsaCxwbGv/6jxv/2Zxq/+OET//jhE//FIeD/+OET//ZnGr/DrOt/w6zrf8Os63/AAAA/xwbGgsAAAAAAAAAABwbGgscGxoLHBsa//qPG//jhE//44RP/+OET/9Vq6j/Vauo/w6zrf8Os63/AAAA/xwbGgscGxoLAAAAAAAAAAAAAAAAHBsaCxwbGgscGxr/AAAA/+OET//jhE//P8zH/z/Mx/8AAAD/HBsa/xwbGgscGxoLAAAAAAAAAAAAAAAAAAAAAAAAAAAcGxoLHBsaCxwbGgscGxr/AAAA/wAAAP8AAAD/HBsa/xwbGgsAAAAAAAAAAAAAAAAAAAAA/D8AAPAPAADgBwAAwAMAAMADAACAAQAAgAEAAIABAACAAQAAgAEAAMADAADAAwAAwAMAAOAHAADwDwAA/B8AAA=="
         rel="icon" type="image/x-icon">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <style>
+        /* Typography customizations */
+        .prose h3 { margin-top: 0.25em; margin-bottom: 0.1em; }
+        .prose h5 { margin-top: 0.1em; margin-bottom: 0.1em; font-weight: 600; }
+        .prose p { margin-top: 0.1em; margin-bottom: 0.5em; }
+        .prose a { color: #818cf8; }
+        .prose a:hover { color: #a5b4fc; }
+        .prose ul { margin-top: 0; margin-bottom: 0; }
+        .prose ol { margin-top: 0; margin-bottom: 0; }
+        .prose li { margin-top: 0; margin-bottom: 0; }
+        .prose > div[style*="flex"] {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .prose table { 
+            margin-top: 0.5em; 
+            margin-bottom: 0.5em;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid #374151;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            min-width: 0;
+        }
+        .prose td, .prose th {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .prose th {
+            background: rgba(55, 65, 81, 0.7);
+            padding: 0.5rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #4b5563;
+        }
+        .prose th[colspan] {
+            background: rgba(75, 85, 99, 0.5);
+        }
+        .prose td, .prose th:not([colspan]) {
+            border-right: 1px solid #4b5563;
+            width: 50%;
+        }
+        .prose td:last-child, .prose th:last-child {
+            border-right: none;
+        }
+        .prose td {
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #374151;
+            background: rgba(31, 41, 55, 0.5);
+        }
+        .prose tr:last-child td {
+            border-bottom: none;
+        }
+        .prose tbody tr:nth-child(even) td {
+            background: rgba(55, 65, 81, 0.3);
+        }
         /* Animation for mobile menu dropdown */
         .slide-down {
             animation: slideDown 0.3s ease;
@@ -47,56 +102,6 @@
         .card-glow:hover::before {
             opacity: 1;
             transform: rotate(-45deg) translateY(120%);
-        }
-
-        /* Markdown content styling */
-        #post-content a {
-            color: #818cf8;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-        }
-        #post-content a:hover {
-            color: #a5b4fc;
-        }
-        #post-content ul, #post-content ol {
-            padding-left: 1.5rem;
-        }
-        #post-content ul {
-            list-style-type: disc;
-        }
-        #post-content ol {
-            list-style-type: decimal;
-        }
-        #post-content li {
-            margin: 0.25rem 0;
-        }
-        #post-content blockquote {
-            border-left: 3px solid #6366f1;
-            padding-left: 1rem;
-            color: #9ca3af;
-            font-style: italic;
-        }
-        #post-content code:not(.mermaid code) {
-            background: rgba(99, 102, 241, 0.15);
-            padding: 0.15rem 0.4rem;
-            border-radius: 0.25rem;
-            font-size: 0.9em;
-        }
-        #post-content pre {
-            background: #1f2937;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            overflow-x: auto;
-        }
-        #post-content pre code {
-            background: none;
-            padding: 0;
-        }
-        #post-content strong {
-            color: #f3f4f6;
-        }
-        #post-content em {
-            color: #d1d5db;
         }
     </style>
 </head>
@@ -147,17 +152,25 @@
             <div class="max-w-5xl mx-auto prose prose-invert prose-lg">
                 <h1 id="post-title" class="text-6xl md:text-7xl font-extrabold mb-6 text-center">Blog Post</h1>
 
-                <!-- Table of Contents - right sidebar -->
-                <nav id="toc" class="hidden xl:block fixed right-8 top-32 w-56 max-h-[calc(100vh-10rem)] overflow-y-auto text-sm">
-                    <div class="bg-gray-800/80 backdrop-blur-sm rounded-xl p-4 border border-gray-700">
-                        <h4 class="text-gray-400 uppercase text-xs font-semibold tracking-wider mb-3">Contents</h4>
-                        <ul id="toc-list" class="flex flex-col gap-2 text-gray-300">
+                <!-- Table of Contents - left sidebar -->
+                <nav id="toc" class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 max-w-[85vw] bg-gray-900/95 backdrop-blur-sm border-r border-gray-700 z-40 transition-transform duration-300 overflow-visible" style="transform: translateX(-100%);">
+                    <div class="p-4 h-full overflow-y-auto">
+                        <h4 class="text-gray-400 uppercase text-xs font-semibold tracking-wider mb-2">Contents</h4>
+                        <hr class="border-gray-600 mb-3">
+                        <ul id="toc-list" class="flex flex-col gap-2 text-gray-300 text-sm">
                             <!-- Populated by JS -->
                         </ul>
                     </div>
+                    <!-- Collapse button -->
+                    <button id="toc-toggle" class="absolute -right-6 md:-right-8 top-4 w-6 md:w-8 h-16 md:h-20 bg-gray-800 border border-gray-700 border-l-0 rounded-r-lg flex flex-col items-center justify-center gap-0.5 hover:bg-gray-700 transition">
+                        <svg id="toc-chevron" class="w-3 h-3 md:w-4 md:h-4 text-gray-400 transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        <span class="text-gray-400 text-[8px] md:text-[10px] font-semibold tracking-wider" style="writing-mode: vertical-rl;">INDEX</span>
+                    </button>
                 </nav>
 
-                <article id="post-content" class="bg-gray-800 rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
+                <article id="post-content" class="bg-gray-800 rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
                     <div id="post-byline" class="hidden">
                         <div class="flex justify-between items-center text-gray-300 text-base">
                             <span id="post-author"></span>
@@ -168,7 +181,7 @@
                     <p class="text-gray-300">Loading post...</p>
                 </article>
 
-                <div class="mt-6 text-center">
+                <div id="back-link" class="mt-6 text-center">
                     <a href="index.html#blog" onclick="event.preventDefault(); if (document.referrer && document.referrer.includes(location.origin)) { history.back(); } else { location.href = 'index.html#blog'; }" class="text-indigo-400 hover:underline font-semibold">← Back</a>
                 </div>
             </div>
@@ -315,30 +328,23 @@
                 if (window.marked) {
                     // Create a div for the markdown content (preserve byline)
                     const markdownDiv = document.createElement('div');
-                    markdownDiv.className = 'flex flex-col gap-2 prose prose-invert prose-indigo max-w-none';
+                    markdownDiv.className = 'prose prose-invert prose-indigo max-w-none';
                     markdownDiv.innerHTML = marked.parse(bodyMd);
                     // Clear loading text but keep byline
                     const loadingText = contentEl.querySelector('p.text-gray-300');
                     if (loadingText) loadingText.remove();
                     contentEl.appendChild(markdownDiv);
 
-                    // Style h3 elements (###) - larger gap above to separate sections, tight below
+                    // Add IDs to headings for TOC navigation
                     const h3s = markdownDiv.querySelectorAll('h3');
                     h3s.forEach((h, i) => {
-                        h.classList.add('text-2xl', 'md:text-3xl', 'font-semibold');
-                        if (i > 0 || h.previousElementSibling) h.classList.add('mt-4');
-                        // Add ID for TOC navigation
                         const slug = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                         h.id = slug || 'section-' + i;
                         h.style.scrollMarginTop = '4rem';
                     });
 
-                    // Style h5 elements (#####) - medium gap above, tight below
                     const h5s = markdownDiv.querySelectorAll('h5');
                     h5s.forEach((h, i) => {
-                        h.classList.add('text-lg', 'md:text-xl', 'font-semibold');
-                        if (h.previousElementSibling) h.classList.add('mt-2');
-                        // Add ID for TOC navigation
                         const slug = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                         h.id = slug || 'subsection-' + i;
                         h.style.scrollMarginTop = '4rem';
@@ -354,7 +360,7 @@
                         a.textContent = h.textContent;
                         a.className = 'hover:text-indigo-400 transition block';
                         if (h.tagName === 'H5') {
-                            li.className = 'pl-3 text-gray-400';
+                            li.className = 'pl-2 text-gray-400 border-gray-600 ml-2';
                         }
                         a.onclick = (e) => {
                             e.preventDefault();
@@ -364,20 +370,32 @@
                         tocList.appendChild(li);
                     });
 
-                    // Style tables
-                    const tables = markdownDiv.querySelectorAll('table');
-                    tables.forEach(table => {
-                        table.classList.add('w-full', 'text-sm', 'md:text-base', 'border-collapse', 'rounded-lg', 'overflow-hidden');
+                    // TOC toggle functionality
+                    const toc = document.getElementById('toc');
+                    const tocToggle = document.getElementById('toc-toggle');
+                    const tocChevron = document.getElementById('toc-chevron');
+                    let tocCollapsed = true;
+                    
+                    tocToggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        tocCollapsed = !tocCollapsed;
+                        if (tocCollapsed) {
+                            toc.style.transform = 'translateX(-100%)';
+                            tocChevron.style.transform = 'rotate(180deg)';
+                        } else {
+                            toc.style.transform = 'translateX(0)';
+                            tocChevron.style.transform = 'rotate(0deg)';
+                        }
                     });
-                    const ths = markdownDiv.querySelectorAll('th');
-                    ths.forEach(th => th.classList.add('bg-gray-700', 'text-left', 'px-4', 'py-2', 'font-semibold', 'border-b', 'border-gray-600'));
-                    const tds = markdownDiv.querySelectorAll('td');
-                    tds.forEach(td => td.classList.add('px-4', 'py-2', 'border-b', 'border-gray-700', 'align-top'));
-                    const trs = markdownDiv.querySelectorAll('tbody tr');
-                    trs.forEach((tr, i) => tr.classList.add(i % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'));
-
-                    // Ensure paragraphs keep intentional line breaks: convert single-line paragraphs that contain <br> from marked.breaks
-                    // (marked with `breaks: true` already outputs <br>, so no further action needed)
+                    
+                    // Close TOC when clicking outside
+                    document.addEventListener('click', (e) => {
+                        if (!tocCollapsed && !toc.contains(e.target)) {
+                            tocCollapsed = true;
+                            toc.style.transform = 'translateX(-100%)';
+                            tocChevron.style.transform = 'rotate(180deg)';
+                        }
+                    });
 
                     // Render Mermaid diagrams (supports responsive: "flowchart LR-TD" = LR on desktop, TD on mobile)
                     const mermaidBlocks = markdownDiv.querySelectorAll('code.language-mermaid');
@@ -445,6 +463,20 @@
                         const num = i + 1;
                         cap.innerHTML = `<strong>Table ${num}.</strong> ${cap.innerHTML}`;
                     });
+                    
+                    // Custom scroll visibility for back-to-top button on blog page
+                    const toTopBtn = document.getElementById('toTopBtn');
+                    
+                    function updateToTopVisibility() {
+                        if (!contentEl || !toTopBtn) return;
+                        const contentRect = contentEl.getBoundingClientRect();
+                        const contentBottomVisible = contentRect.bottom < window.innerHeight;
+                        
+                        toTopBtn.classList.toggle('hidden', !contentBottomVisible);
+                    }
+                    
+                    window.addEventListener('scroll', updateToTopVisibility);
+                    updateToTopVisibility();
                 } else {
                     contentEl.textContent = bodyMd;
                 }

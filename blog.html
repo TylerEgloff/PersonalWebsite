@@ -3,14 +3,28 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Tyler Egloff | Blog</title>
     <link
         href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwbGgscGxoLHBsaCxwbGgsAAAD/AAAA/wAAAP8AAAD/HBsaCxwbGgscGxoLHBsaCxwbGgscGxoLAAAAAAAAAAAcGxoLHBsaCwAAAP8AAAD/o1Uq/6NVKv+jVSr/o1Uq/wAAAP8AAAD/HBsaCxwbGgscGxoLHBsaCwAAAAAcGxoLHBsaCwAAAP8Os63/DrOt/6NVKv+jVSr/FIeD/w6zrf8Os63/o1Uq/wAAAP8cGxoLHBsaCxwbGgscGxoLHBsaCwAAAP8nj4v/qG5N/6huTf+jVSr/o1Uq/w6zrf8Os63/FIeD/6NVKv+jVSr/AAAA/xwbGgscGxoLHBsaCxwbGgsKDQ3/J4+L/9mcav/jhE//44RP/+OET/8Os63/DrOt/xSHg/8Uh4P/o1Uq/wAAAP8cGxoLHBsaCwAAAP/6jxv/44RP/9mcav9Bv7v/P8zH/yePi/8Uh4P/DrOt/w6zrf8Uh4P/FIeD/6NVKv8AAAD/HBsaCxwbGgsAAAD/+o8b/+OET//jhE//P8zH/z/Mx/8Uh4P/w6zrf8Os63/FIeD/xSHg/8Uh4P/AAAA/xwbGgscGxoLAAAA//qPG//jhE//44RP/+OET/9Vq6j/Vauo/xSHg/8Os63/DrOt/xSHg/8Uh4P/o1Uq/wAAAP8cGxoLHBsaCwAAAAAAAAD/+o8b/+OET//jhE//P8zH/z/Mx//jhE//44RP/+OET//jhE//FIeD/wAAAP8cGxoLHBsaCxwbGgscGxoLAAAA//qPG//ZnGr/44RP/+OET/8Uh4P/44RP/+OET//jhE//DrOt/xSHg/8AAAD/HBsaCwAAAAAAAAAAHBsaCxwbGv/6jxv/2Zxq/+OET//jhE//FIeD/+OET//ZnGr/DrOt/w6zrf8Os63/AAAA/xwbGgsAAAAAAAAAABwbGgscGxoLHBsa//qPG//jhE//44RP/+OET/9Vq6j/Vauo/w6zrf8Os63/AAAA/xwbGgscGxoLAAAAAAAAAAAAAAAAHBsaCxwbGgscGxr/AAAA/+OET//jhE//P8zH/z/Mx/8AAAD/HBsa/xwbGgscGxoLAAAAAAAAAAAAAAAAAAAAAAAAAAAcGxoLHBsaCxwbGgscGxr/AAAA/wAAAP8AAAD/HBsa/xwbGgsAAAAAAAAAAAAAAAAAAAAA/D8AAPAPAADgBwAAwAMAAMADAACAAQAAgAEAAIABAACAAQAAgAEAAMADAADAAwAAwAMAAOAHAADwDwAA/B8AAA=="
         rel="icon" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <style>
-        html { font-size: 20px; }
+        html { font-size: 17px; }
+        @media (min-width: 640px) { html { font-size: 19px; } }
+        @media (min-width: 1024px) { html { font-size: 21px; } }
+        /* iOS safe area and dynamic viewport fixes */
+        body {
+            min-height: 100dvh;
+            min-height: -webkit-fill-available;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+        html {
+            height: -webkit-fill-available;
+        }
         /* Typography customizations */
         .prose h3 { margin-top: 0.25em; margin-bottom: 0.1em; }
         .prose h5 { margin-top: 0.1em; margin-bottom: 0.1em; font-weight: 600; }
@@ -37,19 +51,35 @@
             max-width: 100%;
             overflow-x: auto;
         }
+        .prose .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 0.25em 0;
+        }
         .prose table { 
-            margin-top: 0.25em; 
-            margin-bottom: 0.25em;
+            margin-top: 0;
+            margin-bottom: 0;
             border-collapse: separate;
             border-spacing: 0;
             border: 1px solid #374151;
             border-radius: 0.5rem;
             overflow: hidden;
-            min-width: 0;
+            width: 100%;
+            min-width: 280px;
+            table-layout: auto;
         }
         .prose td, .prose th {
             word-wrap: break-word;
             overflow-wrap: break-word;
+            hyphens: auto;
+            min-width: 60px;
+            padding: 0.4rem 0.6rem;
+        }
+        @media (max-width: 480px) {
+            .prose td, .prose th {
+                padding: 0.3rem 0.4rem;
+                font-size: 0.85em;
+            }
         }
         .prose th {
             background: rgba(55, 65, 81, 0.7);
@@ -161,10 +191,10 @@
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 pt-16 pb-6" id="blog-main">
-        <section id="post" class="py-6 px-4 sm:px-6 relative">
+    <main class="max-w-6xl mx-auto px-2 sm:px-4 pt-16 pb-6" id="blog-main">
+        <section id="post" class="py-6 px-2 sm:px-6 relative">
             <div class="max-w-5xl mx-auto prose prose-invert prose-lg">
-                <h1 id="post-title" class="text-6xl md:text-7xl font-extrabold mb-2 text-center">Blog Post</h1>
+                <h1 id="post-title" class="text-4xl md:text-5xl font-extrabold mb-2 text-center">Blog Post</h1>
                 <p id="post-subtitle" class="text-gray-400 text-lg md:text-xl text-center mb-6 hidden"></p>
 
                 <!-- Table of Contents - left sidebar -->
@@ -185,7 +215,7 @@
                     </button>
                 </nav>
 
-                <article id="post-content" class="bg-gray-800 rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
+                <article id="post-content" class="bg-gray-800 rounded-2xl shadow-lg p-4 sm:p-8 max-w-full md:max-w-3xl mx-auto">
                     <div id="post-byline" class="hidden">
                         <div class="flex justify-between items-center text-gray-300 text-base">
                             <span id="post-author"></span>
@@ -524,6 +554,17 @@
                     tableCaptions.forEach((cap, i) => {
                         const num = i + 1;
                         cap.innerHTML = `<strong>Table ${num}.</strong> ${cap.innerHTML}`;
+                    });
+                    
+                    // Wrap tables in scrollable containers for mobile
+                    const tables = markdownDiv.querySelectorAll('table');
+                    tables.forEach(table => {
+                        if (!table.parentElement.classList.contains('table-wrapper')) {
+                            const wrapper = document.createElement('div');
+                            wrapper.className = 'table-wrapper';
+                            table.parentNode.insertBefore(wrapper, table);
+                            wrapper.appendChild(table);
+                        }
                     });
                     
                     // Custom scroll visibility for back-to-top button on blog page

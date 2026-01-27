@@ -1,19 +1,12 @@
 # Winning My First Hackathon
-## How a risky idea can be shipped in 24 hours with proper planning
+## How risky ideas can be made safe through structure
 ## Tyler Egloff | January 2026
 
 ### Introduction
-Fidelity Investments partnered with NKU to sponsor a 24-hour hackathon for over 40 students. Teams were prompted to develop an educational platform teaching users about stock options trading. After a lot of caffeine and 24 hours of development continuing throughout the night, our team was shocked to be awarded first place.
+I placed first in the 2025 Fidelity Investments sponsored hackathon held at NKU. Teams were given 24 hours to develop an informative platform revolving around stock options. Our team gambled on an ambitious video game idea, then relied on proper documentation, delegation, and planning to see our vision through.
 
-### Preparation
-I was a last minute sign-up for the event, so I reached out to a classmate who spoke about the event and joined up to create a group of three. I was lucky that we all shared an interest in developing a video game for this event. Aside from that, our group did not enter the event with any concrete plan on what we would be making or how we would do it.
-As the event started, we picked up two more teammates who were unable to attend the entire event, but we were still able to effectively leverage their skills in the few hours we had with them. With this rag-tag team of five, we watched the clock hit 2:00 P.M., and got to work.
-
-### The Hackathon Begins
-As the hackathon kicked off, our team still had a critical issue: we had not settled on an idea. This led to our first priority being a lengthy discussion about what we would spend the next 24 hours developing. 
-
-##### The Idea
-Our brainstorming culminated in two options: A video game inspired by *Papers, Please.*, where the player recommends stock option trades based on clues, or an interactive educational platform similar to Khan Academy. There were concerns in both ideas that had to be addressed. I transcribed the pros and cons list that we created into the following tables:
+### Choosing Risk
+Before touching a computer, our team sat down eliminating ideas until we were left with two. Firstly was an e-learning platform, Khan Academy style. And second was a video game where players made financial decisions given various clues. From here, a simple pros and cons list went a long way for us:
 
 <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; max-width: 100%;">
 <table style="flex: 1 1 45%; min-width: 200px;">
@@ -22,9 +15,8 @@ Our brainstorming culminated in two options: A video game inspired by *Papers, P
 <tr><th>Pros</th><th>Cons</th></tr>
 </thead>
 <tbody>
-<tr><td>Broad Appeal</td><td>Complexity</td></tr>
-<tr><td>Engaging</td><td>Lacking Game Developers</td></tr>
-<tr><td>Creative Expression</td><td></td></tr>
+<tr><td>Broad Appeal</td><td>Technical Complexity</td></tr>
+<tr><td>Actually Innovative</td><td>Team Lacks Game Developers</td></tr>
 </tbody>
 </table>
 <table style="flex: 1 1 45%; min-width: 200px;">
@@ -33,47 +25,54 @@ Our brainstorming culminated in two options: A video game inspired by *Papers, P
 <tr><th>Pros</th><th>Cons</th></tr>
 </thead>
 <tbody>
-<tr><td>Simpler</td><td>Safe Choice</td></tr>
+<tr><td>Simpler Implementation</td><td>Safe Choice</td></tr>
 <tr><td>Strong Web Developers</td><td>Less Innovative</td></tr>
 <tr><td>Proven Format</td><td></td></tr>
 </tbody>
 </table>
 </div>
 
-We decided that if we leveraged our resources and delegated tasks effectively, that the more daunting idea to develop a video game could be possible. And thus, *Papers, Please.* was born.
+Hackathons reward projects that compel and innovate, and we believed that the video game would make for a much stronger showing. At the same time, we knew that this option carried significantly more risk: we would have to build a servicable game in under 24 hours with a newly formed team of non-game developers. 
 
-##### The Execution
-After deciding upon our idea, we shifted into a drafting phase. Out of our core three members, we delegated one to initialize our codebase, another to layout the game design and content, and myself to work between those two, creating a unified software requirement document. This setup provided us a three way exchange of technical requirements along with game design requirements. I will dedicate the next section to discuss this documentation process further.
+### Structure In Action
+With an idea in hand, we then had to find means to see our vision through. Our team found success by following a key key principles:
 
-##### The Documentation
-Pulling on the knowledge I have gained as an undergraduate researcher, I decided two create two pieces of documentation: A *game loop flowchart*, capturing every state and transition the game should have. And a *software requirement specification*, listing the functional requirements and use cases of the program. These two pieces of documentation provided two crucial benefits: 
+##### Frontload the Thinking
+Discussing technical requirements, judging criteria, limiting the project's scope, and so many other things were discussed at length both before and throughout our build phase. In general, the more time spent thinking about the problem generally reduces the amount of time solving the problem.
+##### "'Give me six hours to chop down a tree and I will spend the first four sharpening the axe.' - Abraham Lincoln"
+
+##### Delegate Tasks
+The phrase, "aces in their places" was a core principle in delegating tasks. Specifically, we had one member begin to initialize a project and explore technical demands. In parallel, we had another teammate laying out the core game design and content. I positioned myself between the other teammates, creating documentation to unify our vision for the project.
+
+##### Document Everything
+I created two pieces of documentation: A *game loop flowchart* (see **Figure 1**), capturing every state and transition the game should have. And a *software requirement specification*, listing the functional requirements and use cases of the program. These two pieces of documentation provided two crucial benefits: 
 1. **A single source of truth**: Essential to collaboration in any discipline, we ensured that the entire team was united on one vision.
-2. **The perfect prompt for GPT-4.0**: There are two approaches for software engineers to prompt a generative model. You can either tell it to build *an* app for you, or you can tell it to build *this* app for you.
-In the time that I spent working on this documentation, another teammate was initializing a phaser web application and researching the framework. We came together, providing both pieces of documentation to GPT-4.0 on our empty project and had at least 75% of our application built from a single prompt. Moreover, we could have found even greater success leveraging AI if my documentation wasn't terribly sloppy and unfinished. See **Figure 1**, or view the GitHub repository [here](https://github.com/HackathonFidelity2025/Documentation).
+2. **The perfect prompt for a coding agent**: There are two approaches for software engineers to prompt a generative AI model. You can either tell it to build *an* app for you, or you can tell it to build *this* app for you. For us, our documentation was comprehensive enough to become a quality AI prompt.
 
 <figure style="border: 1px solid #4b5563; border-radius: 0.5rem; padding: 1rem; margin: 1rem 0; background-color:rgba(75, 85, 99, 0.15);">
 
 ```mermaid
 flowchart LR-TD
-    A{5. Spawn Client & Populate clues, from JSON} --> B[6. Player makes decision]
-    B -->|Approve Call/Put| C[7. Execute Trade]
-    B --> D[Etc.]
+    A[4. Day start] --> B[5. Spawn customer & new clues]
+    B --> C[6. User makes trade decision]
+    C --> D[Etc.]
+    D --> B
 ```
 
 <figcaption style="text-align: center; color: #9ca3af; font-size: 0.85rem; font-style: italic; margin: 0.5rem 0 0 0;">Game loop flowchart (partial)</figcaption>
 </figure>
 
-##### The Sprint
-After we had the backbone of our application built, things turned into a caffeine-driven frenzy. We were coding the clue systems, making game content, fixing bugs. We even had a teammate recording voice lines on his phone to squeeze every bit of polish we could into those 24 hours. To keep the scope of this post contained, I will save other details about our implementation for a different place. To conclude the event, our team presented *Papers, Please* to be evaluated for five aspects:
-  - Research & Creativity
-  - Design & Technology
-  - Business Value
-  - Presentation & Storytelling
-  - Overall "Wow" Factor
+### Executing on That Structure
+With this structure in place, we were able to move directly into implementation. Our division of labor paid off enormously: game design, technical setup, and documentation converged to create a shared understanding of the project and our best steps to take when building it. 
 
-Our game received praise for it's creativity and scalability to various age demographics if game content is tailored for varying education levels. We also received an invitation to showcase our demo at Fidelity Investments. Feel free to play the game [here](https://hackathonfidelity2025.github.io/options_please/), or view the GitHub repository [here](https://github.com/HackathonFidelity2025/options_please).
+##### AI as an execution tool
+With all of our project's requirements formalized, we took the already initialized project and used GPT-4.0 to generate a large portion of the project's initial scaffolding. Within the first few hours of the event, much of the application's foundation was in place, leaving room to implement additional gameplay systems, fix bugs, and improve presentation rather than building every core system in the game.
 
-### Advice
-- Do not refrain from dedicating a considerable amount of time to planning and discussion phases. Our team spent over an hour before a GitHub repository was even initialized. This was vital in our race against the clock because we were able to minimize technical debt and oversights that would have had be fixed later.
-  
-- Anyone who enjoys working in Markdown should check out [Mermaid](https://mermaid.js.org/). It allows you to create diagrams extremely quickly using simple syntax, and most modern IDEs or Markdown editors have extensions to render Mermaid diagrams. Plus, most AI models can interpret Mermaid’s Markdown directly as context.
+##### Finalizing the Project
+With the initial scaffold built, we spent the rest of our time refining the project. We fixed bugs, polished the user interface, and added new gameplay systems. In the end, we had additional time to playtest our game and plan our presentation.
+
+### Additional Advice
+- **Check out Mermaid if you work in Markdown**
+Mermaid served our team very well for it's ability to quickly create flowcharts and diagrams embedded directly in Markdown files. Our team converted a hand written flowchart into Mermaid and used it as context for the AI coding agent we used.
+- **You don't need proprietary tools**
+Our team used entirely free and or open source software to build this project. Some examples are: **GIMP** for image editing, **Obsidian** for editing Markdown, **Phaser** for a JavaScript game framework, and many others.

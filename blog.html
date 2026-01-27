@@ -10,6 +10,7 @@
         rel="icon" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <style>
+        html { font-size: 20px; }
         /* Typography customizations */
         .prose h3 { margin-top: 0.25em; margin-bottom: 0.1em; }
         .prose h5 { margin-top: 0.1em; margin-bottom: 0.1em; font-weight: 600; }
@@ -19,13 +20,26 @@
         .prose ul { margin-top: 0; margin-bottom: 0; }
         .prose ol { margin-top: 0; margin-bottom: 0; }
         .prose li { margin-top: 0; margin-bottom: 0; }
+        .prose .quote-box {
+            background-color: rgba(75, 85, 99, 0.15);
+            border: 1px solid #4b5563;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            font-style: italic;
+            font-size: 0.9em;
+            color: #d1d5db;
+        }
+        .prose h5 { color: #dcdddf; }
+        .prose strong, .prose b { color: #cfd3d8 }
+        .prose figure { margin-top: 0.5rem; margin-bottom: 0.5rem; }
         .prose > div[style*="flex"] {
             max-width: 100%;
             overflow-x: auto;
         }
         .prose table { 
-            margin-top: 0.5em; 
-            margin-bottom: 0.5em;
+            margin-top: 0.25em; 
+            margin-bottom: 0.25em;
             border-collapse: separate;
             border-spacing: 0;
             border: 1px solid #374151;
@@ -106,7 +120,7 @@
     </style>
 </head>
 
-<body class="bg-gray-900 text-gray-100 min-h-screen"
+<body class="bg-gray-900 text-gray-100 min-h-screen text-lg"
     style="background-image: url('data:image/svg+xml;utf8,<svg width=\'400\' height=\'400\' viewBox=\'0 0 400 400\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><circle cx=\'50\' cy=\'80\' r=\'1.5\' fill=\'white\' opacity=\'0.25\'/><circle cx=\'120\' cy=\'200\' r=\'2.5\' fill=\'white\' opacity=\'0.4\'/><circle cx=\'300\' cy=\'100\' r=\'1\' fill=\'white\' opacity=\'0.3\'/><circle cx=\'350\' cy=\'350\' r=\'3\' fill=\'white\' opacity=\'0.25\'/><circle cx=\'200\' cy=\'300\' r=\'2\' fill=\'white\' opacity=\'0.2\'/><circle cx=\'370\' cy=\'40\' r=\'1.2\' fill=\'white\' opacity=\'0.3\'/><circle cx=\'60\' cy=\'350\' r=\'2\' fill=\'white\' opacity=\'0.25\'/><circle cx=\'250\' cy=\'250\' r=\'1.7\' fill=\'white\' opacity=\'0.35\'/><circle cx=\'180\' cy=\'60\' r=\'1.3\' fill=\'white\' opacity=\'0.25\'/></svg>'); background-size: 400px 400px;">
     <header class="fixed w-full top-0 left-0 z-50 backdrop-blur-sm bg-gray-900/80 border-b border-gray-800">
         <div class="max-w-6xl mx-auto px-8">
@@ -156,7 +170,7 @@
                 <!-- Table of Contents - left sidebar -->
                 <nav id="toc" class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 max-w-[85vw] bg-gray-900/95 backdrop-blur-sm border-r border-gray-700 z-40 transition-transform duration-300 overflow-visible" style="transform: translateX(-100%);">
                     <div class="p-4 h-full overflow-y-auto">
-                        <h4 class="text-gray-400 uppercase text-xs font-semibold tracking-wider mb-2">Contents</h4>
+                        <h4 class="text-gray-400 uppercase text-xs font-semibold tracking-wider mb-2 mt-0">Contents</h4>
                         <hr class="border-gray-600 mb-3">
                         <ul id="toc-list" class="flex flex-col gap-2 text-gray-300 text-sm">
                             <!-- Populated by JS -->
@@ -350,6 +364,25 @@
                     if (loadingText) loadingText.remove();
                     contentEl.appendChild(markdownDiv);
 
+                    // Convert ##### "..." to styled quote boxes
+                    const h5Quotes = markdownDiv.querySelectorAll('h5');
+                    h5Quotes.forEach(h5 => {
+                        const text = h5.textContent.trim();
+                        // Check if text starts and ends with quotes (straight or curly)
+                        if ((text.startsWith('"') && text.endsWith('"')) || 
+                            (text.startsWith('"') && text.endsWith('"')) ||
+                            (text.startsWith("'") && text.endsWith("'"))) {
+                            // Extract the quote content (remove outer quotes)
+                            const quoteContent = text.slice(1, -1).trim();
+                            // Create the quote box
+                            const quoteBox = document.createElement('div');
+                            quoteBox.className = 'quote-box';
+                            quoteBox.textContent = quoteContent;
+                            // Replace the h5 with the quote box
+                            h5.replaceWith(quoteBox);
+                        }
+                    });
+
                     // Add IDs to headings for TOC navigation
                     const h3s = markdownDiv.querySelectorAll('h3');
                     h3s.forEach((h, i) => {
@@ -367,6 +400,20 @@
 
                     // Build Table of Contents
                     const tocList = document.getElementById('toc-list');
+                    
+                    // Add title entry that scrolls to top
+                    const titleLi = document.createElement('li');
+                    const titleA = document.createElement('a');
+                    titleA.href = '#post-title';
+                    titleA.textContent = titleEl.textContent;
+                    titleA.className = 'hover:text-indigo-400 transition block font-semibold';
+                    titleA.onclick = (e) => {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    };
+                    titleLi.appendChild(titleA);
+                    tocList.appendChild(titleLi);
+                    
                     const allHeadings = markdownDiv.querySelectorAll('h3, h5');
                     allHeadings.forEach(h => {
                         const li = document.createElement('li');
@@ -429,13 +476,13 @@
                             
                             // Desktop version - render visible first, hide later
                             const desktopContainer = document.createElement('div');
-                            desktopContainer.className = 'mermaid flex justify-center my-4';
+                            desktopContainer.className = 'mermaid flex justify-center my-2';
                             desktopContainer.dataset.responsive = 'desktop';
                             desktopContainer.textContent = code.replace(fullMatch, 'flowchart ' + desktopDir);
                             
                             // Mobile version - render visible first, hide later
                             const mobileContainer = document.createElement('div');
-                            mobileContainer.className = 'mermaid flex justify-center my-4';
+                            mobileContainer.className = 'mermaid flex justify-center my-2';
                             mobileContainer.dataset.responsive = 'mobile';
                             mobileContainer.textContent = code.replace(fullMatch, 'flowchart ' + mobileDir);
                             
@@ -446,7 +493,7 @@
                             responsiveContainers.push(desktopContainer, mobileContainer);
                         } else {
                             const container = document.createElement('div');
-                            container.className = 'mermaid flex justify-center my-4';
+                            container.className = 'mermaid flex justify-center my-2';
                             container.textContent = code;
                             pre.replaceWith(container);
                         }

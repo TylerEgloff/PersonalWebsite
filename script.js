@@ -120,10 +120,13 @@ function createShootingStar() {
     };
 }
 
-// Shooting star loop w/ random timeout
+// Shooting star loop w/ random timeout (only once on blog pages)
+const isBlogPage = window.location.pathname.includes('blog.html');
 function shootingStarLoop() {
     createShootingStar();
-    setTimeout(shootingStarLoop, Math.random() * 10000 + 20000);
+    if (!isBlogPage) {
+        setTimeout(shootingStarLoop, Math.random() * 10000 + 20000);
+    }
 }
 shootingStarLoop();
 
@@ -506,7 +509,7 @@ async function loadBlogIndex() {
 
             // Find subtitle (first ## heading)
             const subtitleLine = lines.find(l => l.trim().startsWith('## ')) || '';
-            const subtitle = subtitleLine ? subtitleLine.trim().slice(3).trim() : '';
+            const subtitle = subtitleLine ? subtitleLine.trim().slice(3).trim() + '...' : '';
 
             cachedBlogPosts.push({ file, title, subtitle });
         } catch (e) {

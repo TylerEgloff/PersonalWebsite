@@ -50,6 +50,12 @@
         .prose > div[style*="flex"] {
             max-width: 100%;
             overflow-x: auto;
+            justify-content: center;
+        }
+        .prose > div[style*="flex"] table {
+            flex: 1 1 45%;
+            min-width: 140px;
+            max-width: 100%;
         }
         .prose .table-wrapper {
             overflow-x: auto;
@@ -57,6 +63,8 @@
             margin: 0.25em auto;
             display: flex;
             justify-content: center;
+            flex: 1 1 auto;
+            min-width: 0;
         }
         .prose table { 
             margin-top: 0;
@@ -66,8 +74,8 @@
             border: 1px solid #374151;
             border-radius: 0.5rem;
             overflow: hidden;
-            width: 100%;
-            min-width: 280px;
+            width: auto;
+            min-width: 120px;
             table-layout: auto;
         }
         .prose td, .prose th {
@@ -558,10 +566,13 @@
                         cap.innerHTML = `<strong>Table ${num}.</strong> ${cap.innerHTML}`;
                     });
                     
-                    // Wrap tables in scrollable containers for mobile
+                    // Wrap tables in scrollable containers for mobile (skip if already in flex container)
                     const tables = markdownDiv.querySelectorAll('table');
                     tables.forEach(table => {
-                        if (!table.parentElement.classList.contains('table-wrapper')) {
+                        const parent = table.parentElement;
+                        const parentStyle = parent.getAttribute('style') || '';
+                        const isInFlex = parentStyle.includes('flex') || parent.classList.contains('table-wrapper');
+                        if (!isInFlex) {
                             const wrapper = document.createElement('div');
                             wrapper.className = 'table-wrapper';
                             table.parentNode.insertBefore(wrapper, table);

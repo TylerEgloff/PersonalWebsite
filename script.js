@@ -11,7 +11,18 @@ function toggleMenu() {
     closeIcon.classList.toggle('hidden');
 }
 
-menuBtn.addEventListener('click', toggleMenu);
+if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+// Close menu if clicking outside
+document.addEventListener('click', (e) => {
+    if (mobileMenu && menuBtn && 
+        !mobileMenu.classList.contains('hidden') && 
+        !mobileMenu.contains(e.target) && 
+        !menuBtn.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+        if (menuIcon) menuIcon.classList.remove('hidden');
+        if (closeIcon) closeIcon.classList.add('hidden');
+    }
+});
 // Close menu if resized to desktop
 window.addEventListener('resize', () => {
     if (window.innerWidth >= 768) {

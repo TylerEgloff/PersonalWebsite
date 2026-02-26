@@ -49,7 +49,7 @@ As a shift lead at McDonald’s, I learned the principle of “aces in their pla
 ##### Document Everything
 I created two pieces of documentation: a *game loop flowchart* (see **Figure 1**), capturing every state and transition the game should have, and a *software requirements specification*, listing the functional requirements and use cases of the program. These two pieces of documentation provided two crucial benefits: 
 1. **A single source of truth**: Essential to collaboration in any discipline, we ensured that the entire team was united on one vision.
-2. **The perfect prompt for a coding agent**: There are two approaches for software engineers to prompt a generative AI model: you can ask it to build *an* app for you, or you can ask it to build *this* app for you. This difference comes down to specificity. Because our documentation explicitly defined both gameplay and technical needs, we had already made an excellent AI prompt.
+2. **The perfect prompt for a coding agent**: There are two approaches for software engineers to prompt a generative AI model: you can ask it to build *an* app for you, or you can ask it to build *this* app for you. The difference comes down to specificity. Because our documentation explicitly defined both gameplay and technical needs, we had already made an excellent AI prompt.
 
 <figure style="border: 1px solid #4b5563; border-radius: 0.5rem; padding: 1rem; margin: 1rem 0; background-color:rgba(75, 85, 99, 0.15);">
 

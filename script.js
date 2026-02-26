@@ -131,12 +131,14 @@ function createShootingStar() {
     };
 }
 
-// Shooting star loop w/ random timeout (only once on blog pages)
+// Shooting star loop w/ random timeout (longer intervals on blog pages)
 const isBlogPage = window.location.pathname.includes('blog.html');
 function shootingStarLoop() {
     createShootingStar();
-    if (!isBlogPage) {
-        setTimeout(shootingStarLoop, Math.random() * 10000 + 20000);
+    if (isBlogPage) {
+        setTimeout(shootingStarLoop, Math.random() * 60000 + 90000); // 90-150 seconds on blog
+    } else {
+        setTimeout(shootingStarLoop, Math.random() * 10000 + 20000); // 20-30 seconds on index
     }
 }
 shootingStarLoop();
@@ -251,13 +253,17 @@ function moveAlien() {
 
 function alienLoop() {
     moveAlien();
-    setTimeout(alienLoop, Math.random() * 30000 + 30000)
+    if (isBlogPage) {
+        setTimeout(alienLoop, Math.random() * 60000 + 120000); // 120-180 seconds on blog
+    } else {
+        setTimeout(alienLoop, Math.random() * 30000 + 30000); // 30-60 seconds on index
+    }
 }
 
-// Wait 25 seconds until first time alien comes out
+// Wait longer on blog pages before first alien appears
 setTimeout(() => {
     alienLoop();
-}, 25000)
+}, isBlogPage ? 60000 : 25000)
 
 // Section visibility management and scroll-to-top button
 // ---------------------------------------------------------

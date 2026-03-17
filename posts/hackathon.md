@@ -1,6 +1,6 @@
 # Winning My First Hackathon
 ## How risky ideas can be made safe through structure
-## Tyler Egloff | January 2026
+## Tyler Egloff | March 2026
 
 ### Introduction
 I placed first in the 2025 Fidelity Investments-sponsored hackathon held at NKU. Teams were given 24 hours to develop an informative platform revolving around stock options. Our team gambled on an ambitious video game idea, then relied on proper documentation, delegation, and planning to see our vision through.
@@ -65,13 +65,29 @@ flowchart LR-TD
 </figure>
 
 ### Executing on That Structure
-With this structure in place, we were able to move directly into implementation. Our division of labor paid off enormously: game design, technical setup, and documentation converged to create a shared understanding of the project and our best path forward for actually building it. 
+With this structure in place, we were able to move directly into implementation. Our division of labor paid off enormously: game design, technical setup, and documentation converged to create a shared understanding of the project and our best path forward for actually building it.
+
+Even with this added clarity, running out of time was a constant fear. While reflecting after the event, we agreed that without this methodical approach, we likely would have finished with a half-baked product unworthy to show off.
 
 ##### AI as an execution tool
-With all of our project's requirements formalized, we used a coding agent to generate most of the initial scaffolding on top of the already initialized project. Within the first few hours of the event, the core architecture of our project was in place, which allowed us to shift away from project setup and toward actually iterating on our ideas.
+With all of our project’s requirements formalized, we used a coding agent to generate most of the initial scaffolding on top of the already initialized project. Within the first few hours, the core architecture was in place, allowing us to move quickly from setup into actually iterating on our ideas.
 
 ##### Finalizing the Project
 With our surplus of time, we focused on refining the project. We fixed bugs, improved the user interface, and added new gameplay systems. In the end, we had additional time to thoroughly playtest the game and refine our final presentation for judging.
+
+The final product is a clue-based deduction game where virtual clients come to you for financial advice with various hints scattered across a desk. Each in-game day, players piece together the evidence, make recommendations, and receive feedback on their decisions. The game was ultimately recognized for its creativity and broad appeal.
+
+<figure style="border: 1px solid #4b5563; border-radius: 0.5rem; padding: 1rem; margin: 1rem 0 0 0; background-color:rgba(75, 85, 99, 0.15);">
+
+<img src="posts/img/Hackathon-screenshot.png" style="border-radius:0.5rem; width:80vw;max-width:500px">
+
+<figcaption style="text-align: center; color: #9ca3af; font-size: 0.85rem; font-style: italic; margin: 0.5rem 0 0 0;">Final Product</figcaption>
+</figure>
+
+<div style="text-align: center;">
+<a href="https://hackathonfidelity2025.github.io/options_please/">Play it</a> or
+<a href="https://github.com/HackathonFidelity2025/options_please">Visit the Repo</a>
+</div>
 
 ### Additional Advice
 - **You don't need proprietary tools**

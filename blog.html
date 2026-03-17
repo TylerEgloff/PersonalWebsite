@@ -47,6 +47,19 @@
         .prose h5 { color: #dcdddf; }
         .prose strong, .prose b { color: #cfd3d8 }
         .prose figure { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+        .prose figure img { display: block; margin: 0 auto; }
+        /* Fix text selection overflow in Safari */
+        ::selection {
+            background: rgba(59, 130, 246, 0.3);
+            color: inherit;
+        }
+        ::-moz-selection {
+            background: rgba(59, 130, 246, 0.3);
+            color: inherit;
+        }
+        #post-content {
+            contain: paint;
+        }
         .prose > div[style*="flex"] {
             max-width: 100%;
             overflow-x: auto;
@@ -565,8 +578,11 @@
                     // Auto-number figures (figcaptions inside <figure> elements)
                     const figcaptions = markdownDiv.querySelectorAll('figure > figcaption, [data-figure] > figcaption');
                     figcaptions.forEach((cap, i) => {
-                        const num = i + 1;
-                        cap.innerHTML = `<strong>Figure ${num}.</strong> ${cap.innerHTML}`;
+                        const figure = cap.closest('figure');
+                        if (!figure || !figure.classList.contains('image-figure')) {
+                            const num = i + 1;
+                            cap.innerHTML = `<strong>Figure ${num}.</strong> ${cap.innerHTML}`;
+                        }
                     });
                     
                     // Auto-number tables (captions or data-table-caption elements)

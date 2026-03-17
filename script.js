@@ -131,15 +131,20 @@ function createShootingStar() {
     };
 }
 
-// Shooting star loop w/ random timeout (longer intervals on blog pages)
+// Shooting star loop w/ random timeout (doubled intervals on blog pages)
 const isBlogPage = window.location.pathname.includes('blog.html');
+let lastStarTime = Date.now();
 function shootingStarLoop() {
-    createShootingStar();
-    if (isBlogPage) {
-        setTimeout(shootingStarLoop, Math.random() * 60000 + 90000); // 90-150 seconds on blog
-    } else {
-        setTimeout(shootingStarLoop, Math.random() * 10000 + 20000); // 20-30 seconds on index
+    const now = Date.now();
+    const elapsed = now - lastStarTime;
+    const minInterval = isBlogPage ? 40000 : 20000;
+    const maxInterval = isBlogPage ? 60000 : 30000;
+    if (elapsed >= minInterval) {
+        createShootingStar();
+        lastStarTime = now;
     }
+    const nextDelay = Math.random() * (maxInterval - minInterval) + minInterval - elapsed;
+    setTimeout(shootingStarLoop, Math.max(100, nextDelay));
 }
 shootingStarLoop();
 
@@ -183,87 +188,6 @@ function textLoop() {
     }
 }
 if (text) textLoop();
-
-// Alien animation
-// ---------------------------------------------------------
-const svgs = [
-    `<svg viewBox="0 0 512 512" width="24" height="24" class="w-6 h-6"><g><path fill="#fff" d="m468.34,111.66l1,69.68l-42.65,0l0,-42.68l-42.69,0l0,-21.32l42.69,0l0,-64l-64,0l0,42.65l-42.69,0l0,42.67l-128,0l0,-42.67l-42.66,0l0,-42.65l-64,0l0,64l42.66,0l0,21.32l-42.66,0l0,42.68l-42.65,0l1,-75.68l-44.69,1l-0.25,222.08l48.75,-0.25l-0.25,-27.25l15.75,0.75l1,28.67l21.34,0l2,36.33l23.66,2l0,40.67l-61.31,-3l0,52l77.91,2.75l-0.09,-30.25l30.83,0.5l-1,-60.32l201.35,3l3,63.32l32.65,3l2.25,33.25l82.25,4.25l-2.5,-51.5l-65.34,-4l-3,-45.67l20.69,0l-2,-46.33l21.31,0l-1,-26.67l18.25,0.75l1.25,28.75l45.5,1.5l0,-222.33l-43.66,-1zm-276.34,133.68l-64,0l0,-64l64,0l0,64zm192,0l-64,0l0,-64l64,0l0,64z"/></g></svg>`,
-    `<svg viewBox="0 0 512 512" width="24" height="24" class="w-6 h-6"><g><path fill="#fff" d="m469.34,266.66l0,-85.32l-42.65,0l0,-42.68l-42.69,0l0,-21.32l42.69,0l0,-64l-64,0l0,42.65l-42.69,0l0,42.67l-128,0l0,-42.67l-42.66,0l0,-42.65l-64,0l0,64l42.66,0l0,21.32l-42.66,0l0,42.68l-42.65,0l0,85.32l-42.69,0l0,149.33l64,0l0,-85.33l21.34,0l0,85.33l42.66,0l0,42.67l106.69,0l0,-64l-85.35,0l0,-21.32l213.35,0l0,21.32l-85.35,0l0,64l106.66,0l0,-42.67l42.69,0l0,-85.33l21.31,0l0,85.33l64,0l0,-149.33l-42.66,0zm-277.34,-21.32l-64,0l0,-64l64,0l0,64zm192,0l-64,0l0,-64l64,0l0,64z"/></g></svg>`
-];
-
-let alienExists = null;
-
-function moveAlien() {
-    if (!alienExists) {
-        alienExists = document.createElement("div");
-        alienExists.style.position = "fixed";
-        alienExists.style.left = "16px";
-        alienExists.style.top = "-48px";
-        alienExists.style.zIndex = "100";
-        alienExists.style.transition = "none";
-        alienExists.style.pointerEvents = "none";
-        document.body.appendChild(alienExists);
-    }
-
-    let frame = 0;
-    let lastFrameTime = 0;
-    let startTime = performance.now();
-    let entering = true;
-    let leaving = false;
-    let baseY = -48;
-    const targetY = 16;
-    let shake = 0;
-
-    function animate(currentTime) {
-        const elapsed = currentTime - startTime;
-
-        if (elapsed - lastFrameTime > 500) {
-            frame = (frame + 1) % 2;
-            alienExists.innerHTML = svgs[frame];
-            lastFrameTime = elapsed;
-        }
-
-        // Horizontal vibration
-        shake = Math.sin(elapsed * 0.005) * 5;
-
-        if (entering) {
-            baseY += (targetY - baseY) * 0.02;
-            if (Math.abs(baseY - targetY) < 1.5) {
-                baseY = targetY;
-                entering = false;
-                setTimeout(() => leaving = true, 2000 + Math.random() * 1000);
-            }
-        }
-
-        if (leaving) {
-            baseY -= 8;
-            if (baseY < -64) {
-                alienExists.style.top = "-32px";
-                alienExists.innerHTML = "";
-                return;
-            }
-        }
-
-        alienExists.style.top = `${baseY}px`;
-        alienExists.style.left = `${24 + shake}px`;
-        requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
-}
-
-function alienLoop() {
-    moveAlien();
-    if (isBlogPage) {
-        setTimeout(alienLoop, Math.random() * 60000 + 120000); // 120-180 seconds on blog
-    } else {
-        setTimeout(alienLoop, Math.random() * 30000 + 30000); // 30-60 seconds on index
-    }
-}
-
-// Wait longer on blog pages before first alien appears
-setTimeout(() => {
-    alienLoop();
-}, isBlogPage ? 60000 : 25000)
 
 // Section visibility management and scroll-to-top button
 // ---------------------------------------------------------

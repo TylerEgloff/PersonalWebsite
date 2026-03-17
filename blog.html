@@ -48,7 +48,13 @@
         .prose strong, .prose b { color: #cfd3d8 }
         .prose figure { margin-top: 0.5rem; margin-bottom: 0.5rem; }
         .prose figure img { display: block; margin: 0 auto; }
-        .prose img { border-radius:0.5rem; }
+        @media (max-width: 640px) {
+            .prose img { max-width: 70vw; }
+        }
+        @media (min-width: 641px) {
+            .prose img { max-width: 500px; }
+        }
+        .prose img { width: 100%; height: auto; border-radius: 0.5rem; }
         /* Fix text selection overflow in Safari */
         ::selection {
             background: rgba(59, 130, 246, 0.3);

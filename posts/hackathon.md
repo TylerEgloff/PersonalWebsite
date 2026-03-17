@@ -79,7 +79,7 @@ The final product is a clue-based deduction game where virtual clients come to y
 
 <figure style="border: 1px solid #4b5563; border-radius: 0.5rem; padding: 1rem; margin: 1rem 0 0 0; background-color:rgba(75, 85, 99, 0.15);">
 
-<img src="posts/img/Hackathon-screenshot.png" style="border-radius:0.5rem; width:80vw;max-width:500px">
+<img src="posts/img/Hackathon-screenshot.png">
 
 <figcaption style="text-align: center; color: #9ca3af; font-size: 0.85rem; font-style: italic; margin: 0.5rem 0 0 0;">Final Product</figcaption>
 </figure>
